@@ -1,0 +1,3 @@
+## CIS Ubuntu 26.04 v1.0.0 | 6.2.3.5 | Ensure events that modify sethostname and setdomainname are collected
+-a always,exit -F arch=b32 -S sethostname,setdomainname -k system-locale
+-a always,exit -F arch=b64 -S sethostname,setdomainname -k system-locale

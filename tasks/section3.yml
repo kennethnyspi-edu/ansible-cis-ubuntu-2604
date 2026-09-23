@@ -1,0 +1,740 @@
+---
+# tasks file for ansible-cis-ubuntu-2604
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION3 | 3.1.1 | Ensure IPv6 status is identified"
+  when:
+    - cis_ubuntu2604_rule_3_1_1
+  tags:
+    - rule_3_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION3 | 3.1.1 | Ensure IPv6 status is identified | sysctl"
+      ansible.posix.sysctl:
+        name: "{{ item }}"
+        value: "{{ 0 if cis_ubuntu2604_required_ipv6 else 1 }}"
+        sysctl_file: "{{ cis_ubuntu2604_sysctl_file_path }}"
+        sysctl_set: true
+        state: present
+        reload: true
+        ignoreerrors: true
+      with_items:
+        - net.ipv6.conf.all.disable_ipv6
+        - net.ipv6.conf.default.disable_ipv6
+        # - net.ipv6.conf.lo.disable_ipv6
+    - name: "SECTION3 | 3.1.1 | Ensure IPv6 status is identified | grub add"
+      ansible.builtin.replace:
+        path: "{{ cis_ubuntu2604_default_grub_file }}"
+        regexp: '^(GRUB_CMDLINE_LINUX=\"(?!.*ipv6.disable=)[^\"]*)(\".*)'
+        replace: '\1 ipv6.disable={{ 0 if cis_ubuntu2604_required_ipv6 else 1 }}\2'
+      notify: Update-grub
+    - name: "SECTION3 | 3.1.1 | Ensure IPv6 status is identified | grub replace"
+      ansible.builtin.replace:
+        path: "{{ cis_ubuntu2604_default_grub_file }}"
+        regexp: "ipv6.disable={{ 0 if not cis_ubuntu2604_required_ipv6 else 1 }}"
+        replace: "ipv6.disable={{ 0 if cis_ubuntu2604_required_ipv6 else 1 }}"
+      notify: Update-grub
+
+- name: "SECTION3 | 3.1.2 | Ensure wireless interfaces are not available"
+  when:
+    - cis_ubuntu2604_rule_3_1_2
+    - ansible_virtualization_type != "docker"
+  tags:
+    - rule_3_1
+    - server_l1
+  block:
+    - name: "SECTION3 | 3.1.2 | find wireless driver modules for the running kernel"
+      ansible.builtin.find:
+        paths: "/lib/modules/{{ ansible_kernel }}/kernel/drivers/net/wireless"
+        patterns: "*.ko,*.ko.xz,*.ko.zst,*.ko.gz"
+        recurse: true
+      register: _cis_wireless_modules
+    - name: "SECTION3 | 3.1.2 | deny-list wireless modules"
+      ansible.builtin.copy:
+        dest: /etc/modprobe.d/blacklist-wireless.conf
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          # Managed by ansible-cis-ubuntu-2604 - CIS 3.1.2
+          {% for m in (_cis_wireless_modules.files | map(attribute='path') | map('basename')
+                       | map('regex_replace', '\\.ko(\\.(xz|zst|gz))?$', '') | unique | sort) %}
+          install {{ m }} /bin/false
+          blacklist {{ m }}
+          {% endfor %}
+      notify: Regenerate initramfs
+      when: _cis_wireless_modules.matched > 0
+
+- name: "SECTION3 | 3.1.3 | Ensure bluetooth services are not in use"
+  ansible.builtin.include_tasks: sub-task-services-clean.yml
+  with_items:
+    - title: "SECTION3 | 3.1.3 | Ensure bluetooth services are not in use"
+      service:
+        - bluetooth.service
+      apt:
+        - bluez
+      disable: "{{ cis_ubuntu2604_rule_3_1_3 }}"
+      remove: "{{ cis_ubuntu2604_rule_3_1_3_remove }}"
+  loop_control:
+    loop_var: outer_item
+  when:
+    - cis_ubuntu2604_rule_3_1_3 or cis_ubuntu2604_rule_3_1_3_remove
+  tags:
+    - rule_3_1
+    - server_l1
+    - workstation_l2
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION3 | 3.2.1 | Ensure atm kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_3_2_1
+  tags:
+    - rule_3_2
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION3 | 3.2.1 | Ensure atm kernel module is not available | setting module and deny listing"
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section3_owner_default }}"
+        group: "{{ cis_ubuntu2604_section3_group_default }}"
+        mode: "{{ cis_ubuntu2604_section3_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install atm(\s|$)'
+          line: "install atm /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist atm$"
+          line: "blacklist atm"
+    - name: "SECTION3 | 3.2.1 | Ensure atm kernel module is not available | unloading module"
+      community.general.modprobe:
+        name: atm
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION3 | 3.2.2 | Ensure can kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_3_2_2
+  tags:
+    - rule_3_2
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION3 | 3.2.2 | Ensure can kernel module is not available | setting module and deny listing"
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section3_owner_default }}"
+        group: "{{ cis_ubuntu2604_section3_group_default }}"
+        mode: "{{ cis_ubuntu2604_section3_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install can(\s|$)'
+          line: "install can /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist can$"
+          line: "blacklist can"
+    - name: "SECTION3 | 3.2.2 | Ensure can kernel module is not available | unloading module"
+      community.general.modprobe:
+        name: can
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION3 | 3.2.3 | Ensure dccp kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_3_2_3
+  tags:
+    - rule_3_2
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION3 | 3.2.3 | Ensure dccp kernel module is not available | setting module and deny listing"
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section3_owner_default }}"
+        group: "{{ cis_ubuntu2604_section3_group_default }}"
+        mode: "{{ cis_ubuntu2604_section3_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install dccp(\s|$)'
+          line: "install dccp /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist dccp$"
+          line: "blacklist dccp"
+    - name: "SECTION3 | 3.2.3 | Ensure dccp kernel module is not available | unloading module"
+      community.general.modprobe:
+        name: dccp
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION3 | 3.2.4 | Ensure rds kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_3_2_4
+  tags:
+    - rule_3_2
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION3 | 3.2.4 | Ensure rds kernel module is not available | setting module and deny listing"
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section3_owner_default }}"
+        group: "{{ cis_ubuntu2604_section3_group_default }}"
+        mode: "{{ cis_ubuntu2604_section3_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install rds(\s|$)'
+          line: "install rds /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist rds$"
+          line: "blacklist rds"
+    - name: "SECTION3 | 3.2.4 | Ensure rds kernel module is not available | unloading module"
+      community.general.modprobe:
+        name: rds
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION3 | 3.2.5 | Ensure sctp kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_3_2_5
+  tags:
+    - rule_3_2
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION3 | 3.2.5 | Ensure sctp kernel module is not available | setting module and deny listing"
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section3_owner_default }}"
+        group: "{{ cis_ubuntu2604_section3_group_default }}"
+        mode: "{{ cis_ubuntu2604_section3_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install sctp(\s|$)'
+          line: "install sctp /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist sctp$"
+          line: "blacklist sctp"
+    - name: "SECTION3 | 3.2.5 | Ensure sctp kernel module is not available | unloading module"
+      community.general.modprobe:
+        name: sctp
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION3 | 3.2.6 | Ensure tipc kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_3_2_6
+  tags:
+    - rule_3_2
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION3 | 3.2.6 | Ensure tipc kernel module is not available | setting module and deny listing"
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section3_owner_default }}"
+        group: "{{ cis_ubuntu2604_section3_group_default }}"
+        mode: "{{ cis_ubuntu2604_section3_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install tipc(\s|$)'
+          line: "install tipc /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist tipc$"
+          line: "blacklist tipc"
+    - name: "SECTION3 | 3.2.6 | Ensure tipc kernel module is not available | unloading module"
+      community.general.modprobe:
+        name: tipc
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION3 | 3.2.7 | Ensure unneeded network protocol kernel modules are not available"
+  when:
+    - cis_ubuntu2604_rule_3_2_7
+  tags:
+    - rule_3_2
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION3 | 3.2.7 | deny-list site-defined unneeded network protocol modules"
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis-net-protocols.conf
+        regexp: '^\s*{{ item.0 }}\s+{{ item.1 }}(\s|$)'
+        line: "{{ item.0 }} {{ item.1 }}{{ ' /bin/false' if item.0 == 'install' else '' }}"
+        create: true
+        owner: root
+        group: root
+        mode: "0644"
+      loop: "{{ ['install', 'blacklist'] | product(cis_ubuntu2604_net_modules_deny) | list }}"
+      notify: Regenerate initramfs
+    - name: "SECTION3 | 3.2.7 | list network protocol modules available in the running kernel (site review)"
+      ansible.builtin.shell: >
+        set -o pipefail &&
+        find /lib/modules/"$(uname -r)"/kernel/net -type f -name '*.ko*' -printf '%f\n'
+        | sed -E 's/\.ko(\.[xg]z|\.zst)?$//' | sort -u | paste -sd' '
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_net_modules
+      changed_when: false
+      check_mode: false
+    - name: "SECTION3 | 3.2.7 | print info"
+      ansible.builtin.debug:
+        msg: >-
+          Review against site inventory and add unneeded ones to cis_ubuntu2604_net_modules_deny:
+          {{ _cis_net_modules.stdout }}
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION3 | 3.3.1.1 | Ensure net.ipv4.ip_forward is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.ip_forward
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_1
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.2 | Ensure net.ipv4.conf.all.forwarding is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.all.forwarding
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_2
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.3 | Ensure net.ipv4.conf.default.forwarding is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.default.forwarding
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_3
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.4 | Ensure net.ipv4.conf.all.send_redirects is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.all.send_redirects
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_4
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.5 | Ensure net.ipv4.conf.default.send_redirects is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.default.send_redirects
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_5
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.6 | Ensure net.ipv4.icmp_ignore_bogus_error_responses is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.icmp_ignore_bogus_error_responses
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_6
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.7 | Ensure net.ipv4.icmp_echo_ignore_broadcasts is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.icmp_echo_ignore_broadcasts
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_7
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.8 | Ensure net.ipv4.conf.all.accept_redirects is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.all.accept_redirects
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_8
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.9 | Ensure net.ipv4.conf.default.accept_redirects is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.default.accept_redirects
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_9
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.10 | Ensure net.ipv4.conf.all.secure_redirects is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.all.secure_redirects
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_10
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.11 | Ensure net.ipv4.conf.default.secure_redirects is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.default.secure_redirects
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_11
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.12 | Ensure net.ipv4.conf.all.rp_filter is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.all.rp_filter
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_12
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.13 | Ensure net.ipv4.conf.default.rp_filter is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.default.rp_filter
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_13
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.14 | Ensure net.ipv4.conf.all.accept_source_route is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.all.accept_source_route
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_14
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.15 | Ensure net.ipv4.conf.default.accept_source_route is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.default.accept_source_route
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_15
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.16 | Ensure net.ipv4.conf.all.log_martians is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.all.log_martians
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_16
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.17 | Ensure net.ipv4.conf.default.log_martians is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.default.log_martians
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_17
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.18 | Ensure net.ipv4.tcp_syncookies is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.tcp_syncookies
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_18
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.1.19 | Ensure net.ipv4.conf.all.route_localnet is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv4.conf.all.route_localnet
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_1_19
+  tags:
+    - rule_3_3_1
+    - server_l1
+    - workstation_l1
+
+# 3.3.2.x: written even when IPv6 is disabled, so the settings hold if IPv6 is re-enabled
+- name: "SECTION3 | 3.3.2.1 | Ensure net.ipv6.conf.all.forwarding is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_2, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv6.conf.all.forwarding
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_2_1
+  tags:
+    - rule_3_3_2
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.2.2 | Ensure net.ipv6.conf.default.forwarding is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_2, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv6.conf.default.forwarding
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_2_2
+  tags:
+    - rule_3_3_2
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.2.3 | Ensure net.ipv6.conf.all.accept_redirects is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_2, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv6.conf.all.accept_redirects
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_2_3
+  tags:
+    - rule_3_3_2
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.2.4 | Ensure net.ipv6.conf.default.accept_redirects is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_2, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv6.conf.default.accept_redirects
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_2_4
+  tags:
+    - rule_3_3_2
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.2.5 | Ensure net.ipv6.conf.all.accept_source_route is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_2, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv6.conf.all.accept_source_route
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_2_5
+  tags:
+    - rule_3_3_2
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.2.6 | Ensure net.ipv6.conf.default.accept_source_route is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_2, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv6.conf.default.accept_source_route
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_2_6
+  tags:
+    - rule_3_3_2
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.2.7 | Ensure net.ipv6.conf.all.accept_ra is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_2, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv6.conf.all.accept_ra
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_2_7
+  tags:
+    - rule_3_3_2
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION3 | 3.3.2.8 | Ensure net.ipv6.conf.default.accept_ra is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_3_3_2, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: net.ipv6.conf.default.accept_ra
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_3_3_2_8
+  tags:
+    - rule_3_3_2
+    - server_l1
+    - workstation_l1
+

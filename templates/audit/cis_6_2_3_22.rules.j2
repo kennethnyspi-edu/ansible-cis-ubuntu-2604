@@ -1,0 +1,4 @@
+## CIS Ubuntu 26.04 v1.0.0 | 6.2.3.22 | Ensure session initiation information is collected
+-a always,exit -F arch=b64 -F path=/var/run/utmp -F perm=wa -k session
+-a always,exit -F arch=b64 -F path=/var/log/wtmp -F perm=wa -k session
+-a always,exit -F arch=b64 -F path=/var/log/btmp -F perm=wa -k session

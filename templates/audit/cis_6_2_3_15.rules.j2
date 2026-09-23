@@ -1,0 +1,2 @@
+## CIS Ubuntu 26.04 v1.0.0 | 6.2.3.15 | Ensure events that modify /etc/security/opasswd are collected
+-a always,exit -F arch=b64 -F path=/etc/security/opasswd -F perm=wa -k identity

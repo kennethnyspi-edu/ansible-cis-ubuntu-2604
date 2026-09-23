@@ -1,0 +1,3 @@
+## CIS Ubuntu 26.04 v1.0.0 | 6.2.3.6 | Ensure events that modify /etc/issue and /etc/issue.net are collected
+-a always,exit -F arch=b64 -F path=/etc/issue -F perm=wa -k system-locale
+-a always,exit -F arch=b64 -F path=/etc/issue.net -F perm=wa -k system-locale

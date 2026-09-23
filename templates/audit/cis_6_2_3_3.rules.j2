@@ -1,0 +1,2 @@
+## CIS Ubuntu 26.04 v1.0.0 | 6.2.3.3 | Ensure events that modify the sudo log file are collected
+-a always,exit -F arch=b64 -F path={{ cis_ubuntu2604_audit_sudo_log_file }} -F perm=wa -k sudo_log_file

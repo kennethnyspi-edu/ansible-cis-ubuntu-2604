@@ -1,0 +1,4 @@
+## CIS Ubuntu 26.04 v1.0.0 | 6.2.3.4 | Ensure events that modify date and time information are collected
+-a always,exit -F arch=b64 -S adjtimex,settimeofday -k time-change
+-a always,exit -F arch=b64 -S clock_settime -F a0=0x0 -k time-change
+-a always,exit -F arch=b64 -F path=/etc/localtime -F perm=wa -k localtime-change

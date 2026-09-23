@@ -1,0 +1,3 @@
+## CIS Ubuntu 26.04 v1.0.0 | 6.2.3.26 | Ensure events that modify the system's Mandatory Access Controls are collected
+-a always,exit -F arch=b64 -F dir=/etc/apparmor -F perm=wa -k MAC-policy
+-a always,exit -F arch=b64 -F dir=/etc/apparmor.d -F perm=wa -k MAC-policy

@@ -1,0 +1,68 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: "Include ansible-cis-ubuntu-2604"
+      ansible.builtin.include_role:
+        name: "ansible-cis-ubuntu-2604"
+  vars:
+    cis_ubuntu2604_section1: true
+    cis_ubuntu2604_section2: true
+    cis_ubuntu2604_section3: true
+    cis_ubuntu2604_section4: true
+    cis_ubuntu2604_section5: true
+    cis_ubuntu2604_section6: true
+    cis_ubuntu2604_section7: true
+    # -------------------------
+    cis_ubuntu2604_rule_1_3_1_3: false # AppArmor complain mode
+    cis_ubuntu2604_rule_1_3_1_4: false # AppArmor enforce mode
+    # -------------------------
+    cis_ubuntu2604_set_boot_pass: false # bootloader password (disabled)
+    cis_ubuntu2604_disable_boot_pass: true # bootloader password (disabled with cis_ubuntu2604_set_boot_pass)
+    # -------------------------
+    cis_ubuntu2604_rule_3_1_3: true # bluetooth service
+    cis_ubuntu2604_rule_3_1_3_remove: true # bluetooth service
+    # -------------------------
+    cis_ubuntu2604_allow_gdm_gui: false
+    cis_ubuntu2604_allow_autofs: false # Disable auto mount, set to true to allow it and not disable
+    cis_ubuntu2604_rule_1_1_1_9: true # Disable USB Storage, set to false to not disable
+    cis_ubuntu2604_time_synchronization_service: chrony # chrony | systemd-timesyncd
+    cis_ubuntu2604_time_synchronization_time_server:
+      - uri: time.cloudflare.com
+        config: iburst
+      - uri: ntp.ubuntu.com
+        config: iburst
+    cis_ubuntu2604_allow_cups: false
+    # -------------------------
+    cis_ubuntu2604_install_aide: false
+    cis_ubuntu2604_config_aide: true
+    # -------------------------
+    cis_ubuntu2604_journald_system_max_use: 4G
+    cis_ubuntu2604_journald_system_keep_free: 8G
+    cis_ubuntu2604_journald_runtime_max_use: 256M
+    cis_ubuntu2604_journald_runtime_keep_free: 512M
+    cis_ubuntu2604_journald_max_file_sec: 1month
+    # -------------------------
+    cis_ubuntu2604_required_ipv6: false
+    cis_ubuntu2604_firewall: ufw
+    # -------------------------
+    cis_ubuntu2604_cron_allow_users:
+      - root
+    cis_ubuntu2604_at_allow_users:
+      - root
+    # -------------------------
+    cis_ubuntu2604_faillock_deny: 5
+    cis_ubuntu2604_faillock_unlock_time: 900
+    cis_ubuntu2604_faillock_minlen: 14
+    cis_ubuntu2604_password_complexity:
+      - key: "minclass"
+        value: "3"
+      - key: "dcredit"
+        value: "-1"
+      - key: "ucredit"
+        value: "-1"
+      - key: "ocredit"
+        value: "-1"
+      - key: "lcredit"
+        value: "-1"

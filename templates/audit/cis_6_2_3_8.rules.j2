@@ -1,0 +1,4 @@
+## CIS Ubuntu 26.04 v1.0.0 | 6.2.3.8 | Ensure events that modify the system's network environment are collected
+-a always,exit -F arch=b64 -F path=/etc/network/interfaces -F perm=wa -k system-locale
+-a always,exit -F arch=b64 -F dir=/etc/network/interfaces.d -F perm=wa -k system-locale
+-a always,exit -F arch=b64 -F dir=/etc/netplan/ -F perm=wa -k system-locale

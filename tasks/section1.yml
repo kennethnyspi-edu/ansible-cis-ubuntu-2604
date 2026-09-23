@@ -1,0 +1,1964 @@
+---
+# tasks file for ansible-cis-ubuntu-2604
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION1 | 1.1.1.1 | Ensure cramfs kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_1
+  tags:
+    - rule_1_1_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: >
+        SECTION1 | 1.1.1.1 | Ensure cramfs kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install cramfs(\s|$)'
+          line: "install cramfs /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist cramfs$"
+          line: "blacklist cramfs"
+    - name: >
+        SECTION1 | 1.1.1.1 | Ensure cramfs kernel module is not available | unloading module
+      community.general.modprobe:
+        name: cramfs
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION1 | 1.1.1.2 | Ensure freevxfs kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_2
+  tags:
+    - rule_1_1_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: >
+        SECTION1 | 1.1.1.2 | Ensure freevxfs kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install freevxfs(\s|$)'
+          line: "install freevxfs /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist freevxfs$"
+          line: "blacklist freevxfs"
+    - name: >
+        SECTION1 | 1.1.1.2 | Ensure freevxfs kernel module is not available | unloading module
+      community.general.modprobe:
+        name: freevxfs
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION1 | 1.1.1.3 | Ensure hfs kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_3
+  tags:
+    - rule_1_1_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: >
+        SECTION1 | 1.1.1.3 | Ensure hfs kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install hfs(\s|$)'
+          line: "install hfs /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist hfs$"
+          line: "blacklist hfs"
+    - name: >
+        SECTION1 | 1.1.1.3 | Ensure hfs kernel module is not available | unloading module
+      community.general.modprobe:
+        name: hfs
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION1 | 1.1.1.4 | Ensure hfsplus kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_4
+  tags:
+    - rule_1_1_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: >
+        SECTION1 | 1.1.1.4 | Ensure hfsplus kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install hfsplus(\s|$)'
+          line: "install hfsplus /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist hfsplus$"
+          line: "blacklist hfsplus"
+    - name: >
+        SECTION1 | 1.1.1.4 | Ensure hfsplus kernel module is not available | unloading module
+      community.general.modprobe:
+        name: hfsplus
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION1 | 1.1.1.5 | Ensure jffs2 kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_5
+  tags:
+    - rule_1_1_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: >
+        SECTION1 | 1.1.1.5 | Ensure jffs2 kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install jffs2(\s|$)'
+          line: "install jffs2 /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist jffs2$"
+          line: "blacklist jffs2"
+    - name: >
+        SECTION1 | 1.1.1.5 | Ensure jffs2 kernel module is not available | unloading module
+      community.general.modprobe:
+        name: jffs2
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION1 | 1.1.1.6 | Ensure overlay kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_6
+  tags:
+    - rule_1_1_1
+    - server_l2
+    - workstation_l2
+  block:
+    - name: >
+        SECTION1 | 1.1.1.6 | Ensure overlayfs kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install overlayfs(\s|$)'
+          line: "install overlayfs /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist overlayfs$"
+          line: "blacklist overlayfs"
+    # NOTE: Module overlayfs is builtin, and can not be removed complete
+    # - name: >
+    #     SECTION1 | 1.1.1.6 | Ensure overlayfs kernel module is not available | unloading module
+    #   community.general.modprobe:
+    #     name: overlayfs
+    #     state: absent
+    #   when: ansible_virtualization_type != "docker"
+
+- name: "SECTION1 | 1.1.1.7 | Ensure squashfs kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_7
+  tags:
+    - rule_1_1_1
+    - server_l2
+    - workstation_l2
+  block:
+    - name: >
+        SECTION1 | 1.1.1.7 | Ensure squashfs kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install squashfs(\s|$)'
+          line: "install squashfs /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist squashfs$"
+          line: "blacklist squashfs"
+    # NOTE: Module squashfs is builtin, and can not be removed complete
+    # - name: >
+    #     SECTION1 | 1.1.1.7 | Ensure squashfs kernel module is not available | unloading module
+    #   community.general.modprobe:
+    #     name: squashfs
+    #     state: absent
+    #   when: ansible_virtualization_type != "docker"
+
+- name: "SECTION1 | 1.1.1.8 | Ensure udf kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_8
+  tags:
+    - rule_1_1_1
+    - server_l2
+    - workstation_l2
+  block:
+    - name: >
+        SECTION1 | 1.1.1.8 | Ensure udf kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install udf(\s|$)'
+          line: "install udf /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist udf$"
+          line: "blacklist udf"
+    - name: >
+        SECTION1 | 1.1.1.8 | Ensure udf kernel module is not available | unloading module
+      community.general.modprobe:
+        name: udf
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION1 | 1.1.1.9 | Ensure firewire-core kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_9
+  tags:
+    - rule_1_1_1
+    - server_l1
+    - workstation_l2
+  block:
+    - name: >
+        SECTION1 | 1.1.1.9 | Ensure firewire-core kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install firewire-core(\s|$)'
+          line: "install firewire-core /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist firewire-core$"
+          line: "blacklist firewire-core"
+    - name: >
+        SECTION1 | 1.1.1.9 | Ensure firewire-core kernel module is not available | unloading module
+      community.general.modprobe:
+        name: firewire-core
+        state: absent
+      when: ansible_virtualization_type != "docker"
+
+- name: "SECTION1 | 1.1.1.10 | Ensure usb-storage kernel module is not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_10
+  tags:
+    - rule_1_1_1
+    - server_l1
+    - workstation_l2
+  block:
+    - name: >
+        SECTION1 | 1.1.1.10 | Ensure usb-storage kernel module is not available | setting module and deny listing
+      notify: Regenerate initramfs
+      ansible.builtin.lineinfile:
+        dest: /etc/modprobe.d/cis.conf
+        regexp: "{{ item.reg }}"
+        line: "{{ item.line }}"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+      with_items:
+        - reg: '{{ cis_ubuntu2604_regex_base_search }}install usb-storage(\s|$)'
+          line: "install usb-storage /bin/false"
+        - reg: "{{ cis_ubuntu2604_regex_base_search }}blacklist usb-storage$"
+          line: "blacklist usb-storage"
+    - name: >
+        SECTION1 | 1.1.1.10 | Ensure usb-storage kernel module is not available | unloading module
+      community.general.modprobe:
+        name: usb-storage
+        state: absent
+      register: cis_1_1_1_10_modprobe_result
+      failed_when:
+        - cis_1_1_1_10_modprobe_result.rc is defined
+        - cis_1_1_1_10_modprobe_result.rc != 0
+        - "'in use' not in (cis_1_1_1_10_modprobe_result.stderr | default(''))"
+      changed_when:
+        - cis_1_1_1_10_modprobe_result.msg is not defined
+        - cis_1_1_1_10_modprobe_result.state | default('') != 'absent'
+      when: ansible_virtualization_type != "docker"
+
+    - name: >
+        SECTION1 | 1.1.1.10 | Ensure usb-storage kernel module is not available | warn if module in use
+      ansible.builtin.debug:
+        msg: >-
+          WARNING: Host {{ inventory_hostname }}: usb_storage module is
+          currently in use and could not be unloaded. Blacklisting applied
+          — reboot required for full remediation.
+      when:
+        - ansible_virtualization_type != "docker"
+        - cis_1_1_1_10_modprobe_result is defined
+        - "'in use' in (cis_1_1_1_10_modprobe_result.stderr | default(''))"
+
+    - name: >
+        SECTION1 | 1.1.1.10 | Ensure usb-storage kernel module is not available | flag reboot required
+      ansible.builtin.set_fact:
+        cis_reboot_required: true
+      when:
+        - ansible_virtualization_type != "docker"
+        - cis_1_1_1_10_modprobe_result is defined
+        - "'in use' in (cis_1_1_1_10_modprobe_result.stderr | default(''))"
+
+- name: "SECTION1 | 1.1.1.11 | Ensure unused filesystems kernel modules are not available"
+  when:
+    - cis_ubuntu2604_rule_1_1_1_11
+  tags:
+    - rule_1_1_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: >
+        SECTION1 | 1.1.1.11 | Ensure unused filesystems kernel modules are not available | find mounted filesystems
+      ansible.builtin.shell: >
+        set -o pipefail && findmnt -knD | awk '{print $2}' | sort -u
+      register: cis_ubuntu2604_mounted_filesystems
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      changed_when: false
+
+    - name: >
+        SECTION1 | 1.1.1.11 | Ensure unused filesystems kernel modules are not available | list available filesystem kernel modules
+      ansible.builtin.find:
+        paths: /lib/modules/{{ ansible_kernel }}/kernel/fs
+        recurse: false
+        file_type: directory
+      register: cis_ubuntu2604_available_fs_modules
+
+    - name: >
+        SECTION1 | 1.1.1.11 | Ensure unused filesystems kernel modules are not available | check and unload loaded vulnerable filesystems
+      ansible.builtin.include_tasks: section1-1_1_1_10.yml
+      loop: "{{ cis_ubuntu2604_available_fs_modules.files | map(attribute='path') | map('basename') }}"
+      loop_control:
+        loop_var: cis_ubuntu2604_fs_module_file
+      when:
+        - cis_ubuntu2604_fs_module_file in cis_ubuntu2604_fs_known_vulnerable
+        - cis_ubuntu2604_fs_module_file not in cis_ubuntu2604_fs_ignored
+
+# ------------------------------------------------------------------------------
+
+- name: |
+    SECTION1 | 1.1.2.1   | Configure /tmp
+    SECTION1 | 1.1.2.1.1 | Ensure /tmp is tmpfs or a separate partition
+    SECTION1 | 1.1.2.1.2 | Ensure nodev option set on /tmp partition
+    SECTION1 | 1.1.2.1.3 | Ensure nosuid option set on /tmp partition
+    SECTION1 | 1.1.2.1.4 | Ensure noexec option set on /tmp partition
+  ansible.builtin.template:
+    src: system/tmp.mount.j2
+    dest: /etc/systemd/system/tmp.mount
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+  notify: Systemd restart and enable tmp.mount
+  when:
+    - cis_ubuntu2604_rule_1_1_2_1
+  tags:
+    - rule_1_1_2_1
+    - server_l1
+    - workstation_l1
+
+# ------------------------------------------------------------------------------
+
+- name: |
+    SECTION1 | 1.1.2.2   | Configure /dev/shm
+    SECTION1 | 1.1.2.2.1 | Ensure /dev/shm is tmpfs or a separate partition
+    SECTION1 | 1.1.2.2.2 | Ensure nodev option set on /dev/shm partition
+    SECTION1 | 1.1.2.2.3 | Ensure nosuid option set on /dev/shm partition
+    SECTION1 | 1.1.2.2.4 | Ensure noexec option set on /dev/shm partition
+  ansible.posix.mount:
+    name: /dev/shm
+    src: tmpfs
+    state: mounted
+    fstype: tmpfs
+    opts: >-
+      defaults,rw,relatime,size={{ cis_ubuntu2604_rule_1_1_2_2_shm_size | default('2G') }}{{
+      ',nodev' if cis_ubuntu2604_rule_1_1_2_2_2 else '' }}{{
+      ',nosuid' if cis_ubuntu2604_rule_1_1_2_2_3 else '' }}{{
+      ',noexec' if cis_ubuntu2604_rule_1_1_2_2_4 else '' }}
+  when:
+    - cis_ubuntu2604_rule_1_1_2_2
+  tags:
+    - rule_1_1_2_2
+    - server_l1
+    - workstation_l1
+
+# NOTE: systemd load for shm has not worked
+# - name: |
+#     SECTION1 | 1.1.2.2   | Configure /dev/shm
+#     SECTION1 | 1.1.2.2.1 | Ensure /dev/shm is tmpfs or a separate partition
+#     SECTION1 | 1.1.2.2.2 | Ensure nodev option set on /dev/shm partition
+#     SECTION1 | 1.1.2.2.3 | Ensure nosuid option set on /dev/shm partition
+#     SECTION1 | 1.1.2.2.4 | Ensure noexec option set on /dev/shm partition
+#   ansible.builtin.template:
+#     src: system/dev-shm.mount.j2
+#     dest: /etc/systemd/system/dev-shm.mount
+#     owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+#     group: "{{ cis_ubuntu2604_section1_group_default }}"
+#     mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+#   notify: Systemd restart and enable dev-shm.mount
+#   when:
+#     - cis_ubuntu2604_rule_1_1_2_2
+#   tags:
+#     - rule_1_1_2_2
+#     - server_l1
+#     - workstation_l1
+
+# ------------------------------------------------------------------------------
+
+# 1.1.2.3.1 / 1.1.2.4.1 / 1.1.2.5.1 / 1.1.2.6.1 / 1.1.2.7.1 (separate partition exists) cannot be remediated
+# by Ansible without repartitioning. The option rules below are applied only when the mount point already
+# is a separate mount (findmnt), so hosts without the partition are left untouched.
+- name: "SECTION1 | 1.1.2.3-7 | gather separate mounts"
+  ansible.builtin.command: findmnt -kn -o TARGET,OPTIONS
+  register: cis_ubuntu2604_findmnt
+  changed_when: false
+  check_mode: false
+  tags:
+    - rule_1_1_2
+    - server_l1
+    - workstation_l1
+
+- name: |
+    SECTION1 | 1.1.2.3.2 | Ensure nodev option set on /home partition
+    SECTION1 | 1.1.2.3.3 | Ensure nosuid option set on /home partition
+  vars:
+    _cis_mp: "/home"
+    _cis_line: "{{ cis_ubuntu2604_findmnt.stdout_lines | select('match', '^' ~ _cis_mp ~ '\\s') | first | default('') }}"
+    _cis_want: "{{ (['nodev'] if cis_ubuntu2604_rule_1_1_2_3_2 else []) + (['nosuid'] if cis_ubuntu2604_rule_1_1_2_3_3 else []) }}"
+    _cis_have: "{{ (_cis_line.split() | last | default('')).split(',') if _cis_line else [] }}"
+  when:
+    - _cis_line | length > 0
+    - (_cis_want | difference(_cis_have)) | length > 0
+  tags:
+    - rule_1_1_2_3
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.1.2.3 | read fstab entry for /home"
+      ansible.builtin.shell: >
+        set -o pipefail &&
+        awk '$1 !~ /^#/ && $2 == "/home" {print $1" "$3" "$4}' /etc/fstab | head -n1
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_fstab
+      changed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.1.2.3 | add {{ _cis_want | join(',') }} to /home in fstab and remount"
+      ansible.posix.mount:
+        path: "/home"
+        src: "{{ _cis_fstab.stdout.split()[0] }}"
+        fstype: "{{ _cis_fstab.stdout.split()[1] }}"
+        opts: "{{ (_cis_fstab.stdout.split()[2].split(',') + _cis_want) | unique | join(',') }}"
+        state: mounted
+      when: _cis_fstab.stdout | length > 0
+
+- name: |
+    SECTION1 | 1.1.2.4.2 | Ensure nodev option set on /var partition
+    SECTION1 | 1.1.2.4.3 | Ensure nosuid option set on /var partition
+  vars:
+    _cis_mp: "/var"
+    _cis_line: "{{ cis_ubuntu2604_findmnt.stdout_lines | select('match', '^' ~ _cis_mp ~ '\\s') | first | default('') }}"
+    _cis_want: "{{ (['nodev'] if cis_ubuntu2604_rule_1_1_2_4_2 else []) + (['nosuid'] if cis_ubuntu2604_rule_1_1_2_4_3 else []) }}"
+    _cis_have: "{{ (_cis_line.split() | last | default('')).split(',') if _cis_line else [] }}"
+  when:
+    - _cis_line | length > 0
+    - (_cis_want | difference(_cis_have)) | length > 0
+  tags:
+    - rule_1_1_2_4
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.1.2.4 | read fstab entry for /var"
+      ansible.builtin.shell: >
+        set -o pipefail &&
+        awk '$1 !~ /^#/ && $2 == "/var" {print $1" "$3" "$4}' /etc/fstab | head -n1
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_fstab
+      changed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.1.2.4 | add {{ _cis_want | join(',') }} to /var in fstab and remount"
+      ansible.posix.mount:
+        path: "/var"
+        src: "{{ _cis_fstab.stdout.split()[0] }}"
+        fstype: "{{ _cis_fstab.stdout.split()[1] }}"
+        opts: "{{ (_cis_fstab.stdout.split()[2].split(',') + _cis_want) | unique | join(',') }}"
+        state: mounted
+      when: _cis_fstab.stdout | length > 0
+
+- name: |
+    SECTION1 | 1.1.2.5.2 | Ensure nodev option set on /var/tmp partition
+    SECTION1 | 1.1.2.5.3 | Ensure nosuid option set on /var/tmp partition
+    SECTION1 | 1.1.2.5.4 | Ensure noexec option set on /var/tmp partition
+  vars:
+    _cis_mp: "/var/tmp"
+    _cis_line: "{{ cis_ubuntu2604_findmnt.stdout_lines | select('match', '^' ~ _cis_mp ~ '\\s') | first | default('') }}"
+    _cis_want: "{{ (['nodev'] if cis_ubuntu2604_rule_1_1_2_5_2 else []) + (['nosuid'] if cis_ubuntu2604_rule_1_1_2_5_3 else []) + (['noexec'] if cis_ubuntu2604_rule_1_1_2_5_4 else []) }}"
+    _cis_have: "{{ (_cis_line.split() | last | default('')).split(',') if _cis_line else [] }}"
+  when:
+    - _cis_line | length > 0
+    - (_cis_want | difference(_cis_have)) | length > 0
+  tags:
+    - rule_1_1_2_5
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.1.2.5 | read fstab entry for /var/tmp"
+      ansible.builtin.shell: >
+        set -o pipefail &&
+        awk '$1 !~ /^#/ && $2 == "/var/tmp" {print $1" "$3" "$4}' /etc/fstab | head -n1
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_fstab
+      changed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.1.2.5 | add {{ _cis_want | join(',') }} to /var/tmp in fstab and remount"
+      ansible.posix.mount:
+        path: "/var/tmp"
+        src: "{{ _cis_fstab.stdout.split()[0] }}"
+        fstype: "{{ _cis_fstab.stdout.split()[1] }}"
+        opts: "{{ (_cis_fstab.stdout.split()[2].split(',') + _cis_want) | unique | join(',') }}"
+        state: mounted
+      when: _cis_fstab.stdout | length > 0
+
+- name: |
+    SECTION1 | 1.1.2.6.2 | Ensure nodev option set on /var/log partition
+    SECTION1 | 1.1.2.6.3 | Ensure nosuid option set on /var/log partition
+    SECTION1 | 1.1.2.6.4 | Ensure noexec option set on /var/log partition
+  vars:
+    _cis_mp: "/var/log"
+    _cis_line: "{{ cis_ubuntu2604_findmnt.stdout_lines | select('match', '^' ~ _cis_mp ~ '\\s') | first | default('') }}"
+    _cis_want: "{{ (['nodev'] if cis_ubuntu2604_rule_1_1_2_6_2 else []) + (['nosuid'] if cis_ubuntu2604_rule_1_1_2_6_3 else []) + (['noexec'] if cis_ubuntu2604_rule_1_1_2_6_4 else []) }}"
+    _cis_have: "{{ (_cis_line.split() | last | default('')).split(',') if _cis_line else [] }}"
+  when:
+    - _cis_line | length > 0
+    - (_cis_want | difference(_cis_have)) | length > 0
+  tags:
+    - rule_1_1_2_6
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.1.2.6 | read fstab entry for /var/log"
+      ansible.builtin.shell: >
+        set -o pipefail &&
+        awk '$1 !~ /^#/ && $2 == "/var/log" {print $1" "$3" "$4}' /etc/fstab | head -n1
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_fstab
+      changed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.1.2.6 | add {{ _cis_want | join(',') }} to /var/log in fstab and remount"
+      ansible.posix.mount:
+        path: "/var/log"
+        src: "{{ _cis_fstab.stdout.split()[0] }}"
+        fstype: "{{ _cis_fstab.stdout.split()[1] }}"
+        opts: "{{ (_cis_fstab.stdout.split()[2].split(',') + _cis_want) | unique | join(',') }}"
+        state: mounted
+      when: _cis_fstab.stdout | length > 0
+
+- name: |
+    SECTION1 | 1.1.2.7.2 | Ensure nodev option set on /var/log/audit partition
+    SECTION1 | 1.1.2.7.3 | Ensure nosuid option set on /var/log/audit partition
+    SECTION1 | 1.1.2.7.4 | Ensure noexec option set on /var/log/audit partition
+  vars:
+    _cis_mp: "/var/log/audit"
+    _cis_line: "{{ cis_ubuntu2604_findmnt.stdout_lines | select('match', '^' ~ _cis_mp ~ '\\s') | first | default('') }}"
+    _cis_want: "{{ (['nodev'] if cis_ubuntu2604_rule_1_1_2_7_2 else []) + (['nosuid'] if cis_ubuntu2604_rule_1_1_2_7_3 else []) + (['noexec'] if cis_ubuntu2604_rule_1_1_2_7_4 else []) }}"
+    _cis_have: "{{ (_cis_line.split() | last | default('')).split(',') if _cis_line else [] }}"
+  when:
+    - _cis_line | length > 0
+    - (_cis_want | difference(_cis_have)) | length > 0
+  tags:
+    - rule_1_1_2_7
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.1.2.7 | read fstab entry for /var/log/audit"
+      ansible.builtin.shell: >
+        set -o pipefail &&
+        awk '$1 !~ /^#/ && $2 == "/var/log/audit" {print $1" "$3" "$4}' /etc/fstab | head -n1
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_fstab
+      changed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.1.2.7 | add {{ _cis_want | join(',') }} to /var/log/audit in fstab and remount"
+      ansible.posix.mount:
+        path: "/var/log/audit"
+        src: "{{ _cis_fstab.stdout.split()[0] }}"
+        fstype: "{{ _cis_fstab.stdout.split()[1] }}"
+        opts: "{{ (_cis_fstab.stdout.split()[2].split(',') + _cis_want) | unique | join(',') }}"
+        state: mounted
+      when: _cis_fstab.stdout | length > 0
+
+- name: "SECTION1 | 1.2.1.1 | Ensure the source.list and .source files use the Signed-By option"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_1
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.2.1.1 | find sources without Signed-By"
+      ansible.builtin.shell: |
+        set -o pipefail
+        # deb822 .sources: every stanza needs Signed-By; one-line .list: every deb line needs [signed-by=]
+        for f in /etc/apt/sources.list.d/*.sources; do
+          [ -f "$f" ] || continue
+          awk -v f="$f" 'BEGIN{RS="";FS="\n"} /(^|\n)[[:space:]]*Types:/ && !/(^|\n)[[:space:]]*Signed-By:/ && !/(^|\n)[[:space:]]*Enabled:[[:space:]]*no/ {print f": stanza without Signed-By"}' "$f"
+        done
+        grep -HnsP '^\s*deb(-src)?\s+(?!.*signed-by=)' /etc/apt/sources.list /etc/apt/sources.list.d/*.list || true
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: cis_ubuntu2604_apt_unsigned
+      changed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.2.1.1 | keyring inventory"
+      ansible.builtin.shell: |
+        set -o pipefail
+        for f in /etc/apt/trusted.gpg /etc/apt/trusted.gpg.d/* /etc/apt/keyrings/* /usr/share/keyrings/*; do
+          [ -f "$f" ] || continue
+          echo "== $f"
+          gpg --no-default-keyring --show-keys --with-fingerprint --keyid-format long "$f" 2>/dev/null \
+            | grep -E '^(pub|uid|      [0-9A-F ]{40,})' || echo "   (unreadable / not a keyring)"
+        done
+        echo "== Signed-By references in sources"
+        grep -RHs -iE '^\s*Signed-By:|signed-by=' /etc/apt/sources.list /etc/apt/sources.list.d/ || true
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: cis_ubuntu2604_apt_key_list
+      changed_when: false
+      failed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.2.1.1 | print info (manual remediation per site policy)"
+      ansible.builtin.debug:
+        msg: |
+          #############################################################################################
+          1.2.1.1 sources without Signed-By (must be fixed manually):
+          {{ (cis_ubuntu2604_apt_unsigned.stdout_lines | default([]) | join(cis_ubuntu2604_print_info_join_by)) or '  none' }}
+          ---------------------------------------------------------------------------------------------
+          {{ cis_ubuntu2604_apt_key_list.stdout_lines | default([]) | join(cis_ubuntu2604_print_info_join_by) }}
+          #############################################################################################
+
+- name: "SECTION1 | 1.2.1.2 | Ensure weak dependencies are configured"
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/60-no-weak-dependencies
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      # Managed by ansible-cis-ubuntu-2604 - CIS 1.2.1.2
+      APT::Install-Recommends "0";
+      APT::Install-Suggests "0";
+  when:
+    - cis_ubuntu2604_rule_1_2_1_2
+  tags:
+    - rule_1_2_1
+    - server_l2
+    - workstation_l2
+
+- name: "SECTION1 | 1.2.1.3 | Ensure access to gpg key files are configured"
+  ansible.builtin.shell: |
+    set -o pipefail
+    # 0644 or stricter, root:root, for every keyring APT may use (trusted.gpg*, keyrings, Signed-By targets)
+    { find /etc/apt/trusted.gpg /etc/apt/trusted.gpg.d /etc/apt/keyrings /usr/share/keyrings -maxdepth 1 -type f 2>/dev/null
+      grep -RhoPs '(?i)(?<=signed-by[=:])\s*\K/[^\s\]]+' /etc/apt/sources.list /etc/apt/sources.list.d/ 2>/dev/null
+    } | sort -u | while read -r f; do
+      [ -f "$f" ] || continue
+      if [ "$(stat -Lc '%u:%g' "$f")" != "0:0" ] || [ $(( 0$(stat -Lc '%a' "$f") & 0133 )) -ne 0 ]; then
+        chown root:root "$f"; chmod u-x,go-wx "$f"; echo "CHANGED: $f"
+      fi
+    done
+  args:
+    executable: "{{ cis_ubuntu2604_shell_executable }}"
+  register: cis_ubuntu2604_1_2_1_3
+  changed_when: "'CHANGED:' in cis_ubuntu2604_1_2_1_3.stdout"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_3
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.2.1.4 | Ensure access to /etc/apt/trusted.gpg.d directory is configured"
+  ansible.builtin.file:
+    path: /etc/apt/trusted.gpg.d
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,go=rx"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_4
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.2.1.5 | Ensure access to /etc/apt/auth.conf.d directory is configured"
+  ansible.builtin.file:
+    path: /etc/apt/auth.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,go=rx"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_5
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.2.1.6 | Ensure access to files in the /etc/apt/auth.conf.d/ directory is configured"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_6
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.2.1.6 | find files"
+      ansible.builtin.find:
+        paths: /etc/apt/auth.conf.d/
+        patterns: "*"
+        file_type: file
+      register: _cis_1_2_1_6_files
+    - name: "SECTION1 | 1.2.1.6 | set owner and mode"
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        owner: root
+        group: root
+        mode: "u-x,g-wx,o-rwx"
+      loop: "{{ _cis_1_2_1_6_files.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
+- name: "SECTION1 | 1.2.1.7 | Ensure access to /usr/share/keyrings directory is configured"
+  ansible.builtin.file:
+    path: /usr/share/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,go=rx"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_7
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.2.1.8 | Ensure access to /etc/apt/sources.list.d directory is configured"
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,go=rx"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_8
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.2.1.9 | Ensure access to files in /etc/apt/sources.list.d are configured"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_9
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.2.1.9 | find files"
+      ansible.builtin.find:
+        paths: /etc/apt/sources.list.d/
+        patterns: "*"
+        file_type: file
+      register: _cis_1_2_1_9_files
+    - name: "SECTION1 | 1.2.1.9 | set owner and mode"
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        owner: root
+        group: root
+        mode: "u-x,go-wx"
+      loop: "{{ _cis_1_2_1_9_files.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
+- name: "SECTION1 | 1.2.1.10 | Ensure repositories are set to https in /etc/apt/sources.list"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_10
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.2.1.10 | report http:// repositories"
+      ansible.builtin.shell: >
+        grep -HnsP '^\s*(deb(-src)?\s+(\[[^]]*\]\s+)?|URIs:.*)http://' /etc/apt/sources.list || true
+      register: _cis_http_repos
+      changed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.2.1.10 | rewrite listed hosts to https (opt-in: cis_ubuntu2604_apt_https_hosts)"
+      ansible.builtin.shell: |
+        set -o pipefail
+        for f in /etc/apt/sources.list; do
+          [ -f "$f" ] || continue
+          {% for h in cis_ubuntu2604_apt_https_hosts %}
+          sed -ri 's#http://({{ h | regex_escape }})#https://\1#g' "$f"
+          {% endfor %}
+        done
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      when:
+        - cis_ubuntu2604_apt_https_hosts | length > 0
+        - _cis_http_repos.stdout | length > 0
+    - name: "SECTION1 | 1.2.1.10 | print info"
+      ansible.builtin.debug:
+        msg: "{{ ['Repositories still using http:// (switch to https if the mirror supports it):'] + _cis_http_repos.stdout_lines }}"
+      when: _cis_http_repos.stdout | length > 0
+
+- name: "SECTION1 | 1.2.1.11 | Ensure repositories are set to https in /etc/apt/sources.list.d directory"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_11
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.2.1.11 | report http:// repositories"
+      ansible.builtin.shell: >
+        grep -HnsP '^\s*(deb(-src)?\s+(\[[^]]*\]\s+)?|URIs:.*)http://' /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources || true
+      register: _cis_http_repos
+      changed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.2.1.11 | rewrite listed hosts to https (opt-in: cis_ubuntu2604_apt_https_hosts)"
+      ansible.builtin.shell: |
+        set -o pipefail
+        for f in /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources; do
+          [ -f "$f" ] || continue
+          {% for h in cis_ubuntu2604_apt_https_hosts %}
+          sed -ri 's#http://({{ h | regex_escape }})#https://\1#g' "$f"
+          {% endfor %}
+        done
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      when:
+        - cis_ubuntu2604_apt_https_hosts | length > 0
+        - _cis_http_repos.stdout | length > 0
+    - name: "SECTION1 | 1.2.1.11 | print info"
+      ansible.builtin.debug:
+        msg: "{{ ['Repositories still using http:// (switch to https if the mirror supports it):'] + _cis_http_repos.stdout_lines }}"
+      when: _cis_http_repos.stdout | length > 0
+
+- name: "SECTION1 | 1.2.1.12 | Ensure AllowInsecureRepositories is configured"
+  ansible.builtin.lineinfile:
+    path: /etc/apt/apt.conf.d/99-no-insecure-repositories
+    regexp: '^\s*Acquire::AllowInsecureRepositories\s'
+    line: 'Acquire::AllowInsecureRepositories "0";'
+    create: true
+    owner: root
+    group: root
+    mode: "0644"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_12
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.2.1.13 | Ensure AllowWeakRepositories is configured"
+  ansible.builtin.lineinfile:
+    path: /etc/apt/apt.conf.d/99-no-insecure-repositories
+    regexp: '^\s*Acquire::AllowWeakRepositories\s'
+    line: 'Acquire::AllowWeakRepositories "0";'
+    create: true
+    owner: root
+    group: root
+    mode: "0644"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_13
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.2.1.14 | Ensure AllowDowngradeToInsecureRepositories is configured"
+  ansible.builtin.lineinfile:
+    path: /etc/apt/apt.conf.d/99-no-insecure-repositories
+    regexp: '^\s*Acquire::AllowDowngradeToInsecureRepositories\s'
+    line: 'Acquire::AllowDowngradeToInsecureRepositories "0";'
+    create: true
+    owner: root
+    group: root
+    mode: "0644"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_14
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.2.1.15 | Ensure Acquire::Check-Date is configured"
+  ansible.builtin.lineinfile:
+    path: /etc/apt/apt.conf.d/99-no-insecure-repositories
+    regexp: '^\s*Acquire::Check\-Date\s'
+    line: 'Acquire::Check-Date "true";'
+    create: true
+    owner: root
+    group: root
+    mode: "0644"
+  when:
+    - cis_ubuntu2604_rule_1_2_1_15
+  tags:
+    - rule_1_2_1
+    - server_l1
+    - workstation_l1
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION1 | 1.2.2.1 | Ensure updates, patches, and additional security software are installed"
+  ansible.builtin.apt:
+    upgrade: dist
+    force_apt_get: true
+  when:
+    - cis_ubuntu2604_rule_1_2_2_1
+  tags:
+    - rule_1_2_2
+    - server_l1
+    - workstation_l1
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION1 | 1.3.1.1 | Ensure apparmor packages are installed"
+  ansible.builtin.apt:
+    name:
+      - apparmor
+      # 'apparmor-utils' installs 'aa-enforce'
+      - apparmor-utils
+    state: present
+    force_apt_get: true
+  notify: Restart apparmor
+  when:
+    - cis_ubuntu2604_rule_1_3_1_1
+  tags:
+    - rule_1_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.3.1.2 | Ensure AppArmor is enabled"
+  when:
+    - cis_ubuntu2604_rule_1_3_1_2
+  tags:
+    - rule_1_3_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.3.1.2 | Ensure AppArmor is enabled in the bootloader configuration | grub add - apparmor"
+      ansible.builtin.replace:
+        path: "{{ cis_ubuntu2604_default_grub_file }}"
+        regexp: '^(GRUB_CMDLINE_LINUX=\"(?!.*apparmor=)[^\"]*)(\".*)'
+        replace: '\1 apparmor=1\2'
+      notify: Update-grub
+    - name: "SECTION1 | 1.3.1.2 | Ensure AppArmor is enabled in the bootloader configuration | grub replace - apparmor"
+      ansible.builtin.replace:
+        path: "{{ cis_ubuntu2604_default_grub_file }}"
+        regexp: 'apparmor=\d+'
+        replace: "apparmor=1"
+      notify: Update-grub
+    - name: "SECTION1 | 1.3.1.2 | Ensure AppArmor is enabled in the bootloader configuration | grub add - security"
+      ansible.builtin.replace:
+        path: "{{ cis_ubuntu2604_default_grub_file }}"
+        regexp: '^(GRUB_CMDLINE_LINUX=\"(?!.*security=)[^\"]*)(\".*)'
+        replace: '\1 security=apparmor\2'
+      notify: Update-grub
+    - name: "SECTION1 | 1.3.1.2 | Ensure AppArmor is enabled in the bootloader configuration | grub replace - security"
+      ansible.builtin.replace:
+        path: "{{ cis_ubuntu2604_default_grub_file }}"
+        regexp: 'security=\w+'
+        replace: "security=apparmor"
+      notify: Update-grub
+
+- name: "SECTION1 | EXT ext_apparmor_complain | Ensure all AppArmor Profiles are in enforce or complain mode"
+  when:
+    - cis_ubuntu2604_ext_apparmor_complain
+  tags:
+    - rule_1_3_1
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | EXT ext_apparmor_complain | Ensure all AppArmor Profiles are in enforce or complain mode | get status"
+      ansible.builtin.command: "/usr/sbin/apparmor_status --json"
+      changed_when: false
+      register: cis_ubuntu2604_apparmor_json_status
+    - name: "SECTION1 | EXT ext_apparmor_complain | Ensure all AppArmor Profiles are in enforce or complain mode | get unconfined profiles"
+      ansible.builtin.set_fact:
+        cis_ubuntu2604_apparmor_update_to_complain_profiles: "{{ (cis_ubuntu2604_apparmor_json_status.stdout | from_json).profiles | dict2items | selectattr('value', 'in', ['unconfined']) | map(attribute='key') | list }}"
+      when: cis_ubuntu2604_apparmor_update_to_complain_profiles is not defined
+    - name: "SECTION1 | EXT ext_apparmor_complain | Ensure all AppArmor Profiles are in enforce or complain mode | apply unconfined into complain"
+      ansible.builtin.command: "/usr/sbin/aa-complain {{ item }}"
+      changed_when: false
+      failed_when: false # NOTE: this should be later removed when bug for AppArmor is fixed
+      loop: "{{ cis_ubuntu2604_apparmor_update_to_complain_profiles }}"
+      notify: Restart apparmor
+
+- name: "SECTION1 | 1.3.1.3 | Ensure all AppArmor Profiles are enforcing"
+  when:
+    - cis_ubuntu2604_rule_1_3_1_3
+  tags:
+    - rule_1_3_1
+    - server_l2
+    - workstation_l2
+  block:
+    - name: "SECTION1 | 1.3.1.3 | Ensure all AppArmor Profiles are enforcing | get status"
+      ansible.builtin.command: "/usr/sbin/apparmor_status --json"
+      changed_when: false
+      register: cis_ubuntu2604_apparmor_json_status
+    - name: "SECTION1 | 1.3.1.3 | Ensure all AppArmor Profiles are enforcing | get unconfined & complain profiles"
+      ansible.builtin.set_fact:
+        cis_ubuntu2604_apparmor_update_to_enforce_profiles: "{{ (cis_ubuntu2604_apparmor_json_status.stdout | from_json).profiles | dict2items | selectattr('value', 'in', ['unconfined', 'complain']) | map(attribute='key') | list }}"
+      when: cis_ubuntu2604_apparmor_update_to_enforce_profiles is not defined
+    - name: "SECTION1 | 1.3.1.3 | Ensure all AppArmor Profiles are enforcing | apply unconfined into enforce"
+      ansible.builtin.command: "/usr/sbin/aa-enforce {{ item }}"
+      changed_when: false
+      failed_when: false # NOTE: this should be later removed when bug for AppArmor is fixed
+      loop: "{{ cis_ubuntu2604_apparmor_update_to_enforce_profiles }}"
+      notify: Restart apparmor
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION1 | 1.3.1.4 | Ensure kernel.apparmor_restrict_unprivileged_unconfined is enabled"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_1_3_1, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: kernel.apparmor_restrict_unprivileged_unconfined
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_1_3_1_4
+  tags:
+    - rule_1_3_1
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.4.1 | Ensure bootloader password is set"
+  when:
+    - cis_ubuntu2604_rule_1_4_1
+    - cis_ubuntu2604_set_boot_pass
+  tags:
+    - rule_1_4
+    - server_l1
+    - workstation_l1
+    - molecule-idempotence-notest
+  block:
+    - name: "SECTION1 | 1.4.1 | Ensure bootloader password is set | generate password"
+      ansible.builtin.shell: |
+        set -o pipefail &&
+          if [ '{{ cis_ubuntu2604_bootloader_password }}' == 'random' ]; then
+            PASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c12)
+          else
+            PASSWORD='{{ cis_ubuntu2604_bootloader_password }}'
+          fi
+        echo -e "$PASSWORD\n$PASSWORD" | grub-mkpasswd-pbkdf2 --iteration-count=600000 --salt=64 | awk '/grub.pbkdf/{print$NF}'
+      register: cis_ubuntu2604_grub_bootloader_password
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      changed_when: false
+    - name: "SECTION1 | 1.4.1 | Ensure bootloader password is set | generate config"
+      ansible.builtin.copy:
+        dest: /etc/grub.d/00_password
+        content: "cat << EOF\nexec tail -n +2 $0\nset superusers=\"root\"\npassword_pbkdf2 root {{ cis_ubuntu2604_grub_bootloader_password.stdout }}\nEOF"
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_etc_grub_d }}"
+      notify: Generate new grub config
+      when:
+        - cis_ubuntu2604_grub_bootloader_password is defined
+        - cis_ubuntu2604_grub_bootloader_password.stdout is defined
+        - cis_ubuntu2604_grub_bootloader_password.stdout | length > 0
+    - name: "SECTION1 | 1.4.1 | Ensure bootloader password is set | disable password for system boot"
+      ansible.builtin.replace:
+        path: /etc/grub.d/10_linux
+        regexp: '--class os"'
+        replace: '--class os --unrestricted"'
+      notify: Generate new grub config
+      when:
+        - cis_ubuntu2604_disable_boot_pass
+
+- name: "SECTION1 | 1.4.2 | Ensure access to bootloader config is configured"
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_boot_grub }}"
+  with_items:
+    - path: /boot/grub/grub.cfg
+      check: "{{ cis_grub_cfg.stat.exists }}"
+    - path: /boot/grub/grub.conf
+      check: "{{ cis_grub_conf.stat.exists }}"
+    - path: /boot/grub/menu.lst
+      check: "{{ cis_menu_lst.stat.exists }}"
+  when:
+    - cis_ubuntu2604_rule_1_4_2
+    - item.check | bool
+  tags:
+    - rule_1_4
+    - server_l1
+    - workstation_l1
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION1 | 1.5.1 | Ensure fs.protected_hardlinks is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_1_5, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: fs.protected_hardlinks
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_1_5_1
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.5.2 | Ensure fs.protected_symlinks is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_1_5, server_l2, workstation_l2]
+  vars:
+    cis_sysctl_name: fs.protected_symlinks
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_1_5_2
+  tags:
+    - rule_1_5
+    - server_l2
+    - workstation_l2
+
+- name: "SECTION1 | 1.5.3 | Ensure kernel.yama.ptrace_scope is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_1_5, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: kernel.yama.ptrace_scope
+    cis_sysctl_value: "{{ cis_ubuntu2604_ptrace_scope }}"
+    cis_sysctl_ok: "1|2|3"
+  when:
+    - cis_ubuntu2604_rule_1_5_3
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.5.4 | Ensure fs.suid_dumpable is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_1_5, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: fs.suid_dumpable
+    cis_sysctl_value: "0"
+    cis_sysctl_ok: "0"
+  when:
+    - cis_ubuntu2604_rule_1_5_4
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.5.5 | Ensure kernel.dmesg_restrict is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_1_5, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: kernel.dmesg_restrict
+    cis_sysctl_value: "1"
+    cis_sysctl_ok: "1"
+  when:
+    - cis_ubuntu2604_rule_1_5_5
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.5.6 | Ensure prelink is not installed"
+  when:
+    - package_installed_prelink.rc == 0
+    - cis_ubuntu2604_rule_1_5_6
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.5.6 | Ensure prelink is not installed | restore binaries to normal"
+      ansible.builtin.command: prelink -ua
+      changed_when: false
+    - name: "SECTION1 | 1.5.6 | Ensure prelink is not installed | uninstall"
+      ansible.builtin.apt:
+        name: prelink
+        state: absent
+        purge: true
+
+- name: "SECTION1 | 1.5.7 | Ensure Automatic Error Reporting is configured"
+  when:
+    - service_status_apport.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_rule_1_5_7
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+  block:
+    - name: >
+        SECTION1 | 1.5.7 | Ensure Automatic Error Reporting is not enabled | add or edit the enabled parameter to equal 0
+      ansible.builtin.lineinfile:
+        dest: /etc/default/apport
+        regexp: "{{ cis_ubuntu2604_regex_base_search }}enabled{{ cis_ubuntu2604_regex_base_search_equals }}"
+        line: "enabled=0"
+        state: present
+        create: true
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+    - name: >
+        SECTION1 | 1.5.7 | Ensure Automatic Error Reporting is not enabled | stop and disable service
+      ansible.builtin.systemd_service:
+        name: apport
+        daemon_reload: true
+        enabled: false
+        masked: true
+    # - name: "SECTION1 | 1.5.7 | Ensure Automatic Error Reporting is not enabled | uninstall"
+    #   ansible.builtin.apt:
+    #     name: apport
+    #     state: absent
+    #     purge: true
+
+- name: "SECTION1 | 1.5.8 | Ensure kernel.kptr_restrict is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_1_5, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: kernel.kptr_restrict
+    cis_sysctl_value: "{{ cis_ubuntu2604_kptr_restrict }}"
+    cis_sysctl_ok: "1|2"
+  when:
+    - cis_ubuntu2604_rule_1_5_8
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.5.9 | Ensure kernel.randomize_va_space is configured"
+  ansible.builtin.include_tasks:
+    file: sub-task-sysctl.yml
+    apply:
+      tags: [rule_1_5, server_l1, workstation_l1]
+  vars:
+    cis_sysctl_name: kernel.randomize_va_space
+    cis_sysctl_value: "2"
+    cis_sysctl_ok: "2"
+  when:
+    - cis_ubuntu2604_rule_1_5_9
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.5.10 | Ensure core file size is configured"
+  when:
+    - cis_ubuntu2604_rule_1_5_10
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.5.10 | comment out non-zero hard core limits"
+      ansible.builtin.shell: |
+        set -o pipefail
+        for f in /etc/security/limits.conf /etc/security/limits.d/*; do
+          [ -f "$f" ] || continue
+          [ "$f" = /etc/security/limits.d/60-limits.conf ] && continue
+          if grep -Pq '^\s*[^#\s]+\s+hard\s+core\s+([1-9][0-9]*|unlimited|infinity)\b' "$f"; then
+            sed -ri '/^\s*[^#[:space:]]+\s+hard\s+core\s+([1-9][0-9]*|unlimited|infinity)/s/^/# /' "$f"; echo "CHANGED: $f"
+          fi
+        done
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_1_5_10
+      changed_when: "'CHANGED:' in _cis_1_5_10.stdout"
+    - name: "SECTION1 | 1.5.10 | set '* hard core 0'"
+      ansible.builtin.lineinfile:
+        path: /etc/security/limits.d/60-limits.conf
+        regexp: '^\s*\*\s+hard\s+core\s+'
+        line: "*    hard    core    0"
+        create: true
+        owner: root
+        group: root
+        mode: "0644"
+
+- name: "SECTION1 | 1.5.11 | Ensure systemd-coredump ProcessSizeMax is configured"
+  when:
+    - cis_ubuntu2604_rule_1_5_11
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.5.11 | comment out other ProcessSizeMax= in coredump config"
+      ansible.builtin.shell: |
+        set -o pipefail
+        for f in /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf; do
+          [ -f "$f" ] || continue
+          [ "$f" = /etc/systemd/coredump.conf.d/60-coredump.conf ] && continue
+          if grep -Pq '^\s*ProcessSizeMax\s*=\s*(?!0\s*$)' "$f"; then
+            sed -ri '/^\s*ProcessSizeMax\s*=\s*0\s*$/!s/^(\s*ProcessSizeMax\s*=)/# \1/' "$f"; echo "CHANGED: $f"
+          fi
+        done
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_1_5_11
+      changed_when: "'CHANGED:' in _cis_1_5_11.stdout"
+      notify: Restart systemd-coredump
+    - name: "SECTION1 | 1.5.11 | set ProcessSizeMax=0"
+      community.general.ini_file:
+        path: /etc/systemd/coredump.conf.d/60-coredump.conf
+        section: Coredump
+        option: ProcessSizeMax
+        value: "0"
+        no_extra_spaces: true
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart systemd-coredump
+
+- name: "SECTION1 | 1.5.12 | Ensure systemd-coredump Storage is configured"
+  when:
+    - cis_ubuntu2604_rule_1_5_12
+  tags:
+    - rule_1_5
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.5.12 | comment out other Storage= in coredump config"
+      ansible.builtin.shell: |
+        set -o pipefail
+        for f in /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf; do
+          [ -f "$f" ] || continue
+          [ "$f" = /etc/systemd/coredump.conf.d/60-coredump.conf ] && continue
+          if grep -Pq '^\s*Storage\s*=\s*(?!none\s*$)' "$f"; then
+            sed -ri '/^\s*Storage\s*=\s*none\s*$/!s/^(\s*Storage\s*=)/# \1/' "$f"; echo "CHANGED: $f"
+          fi
+        done
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_1_5_12
+      changed_when: "'CHANGED:' in _cis_1_5_12.stdout"
+      notify: Restart systemd-coredump
+    - name: "SECTION1 | 1.5.12 | set Storage=none"
+      community.general.ini_file:
+        path: /etc/systemd/coredump.conf.d/60-coredump.conf
+        section: Coredump
+        option: Storage
+        value: "none"
+        no_extra_spaces: true
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart systemd-coredump
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION1 | 1.6.1 | Ensure /etc/motd is configured"
+  ansible.builtin.copy:
+    content: |
+      {{ cis_ubuntu2604_warning_banner }}
+
+    dest: /etc/motd
+    mode: "{{ cis_ubuntu2604_section1_mode_etc_issue_motd }}"
+  when:
+    - cis_ubuntu2604_rule_1_6_1
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.6.2 | Ensure /etc/issue is configured"
+  ansible.builtin.copy:
+    content: |
+      {{ cis_ubuntu2604_warning_banner }}
+
+    dest: /etc/issue
+    mode: "{{ cis_ubuntu2604_section1_mode_etc_issue_motd }}"
+  when:
+    - cis_ubuntu2604_rule_1_6_2
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.6.3 | Ensure /etc/issue.net is configured"
+  ansible.builtin.copy:
+    content: |
+      {{ cis_ubuntu2604_warning_banner }}
+
+    dest: /etc/issue.net
+    mode: "{{ cis_ubuntu2604_section1_mode_etc_issue_motd }}"
+  when:
+    - cis_ubuntu2604_rule_1_6_3
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.6.4 | Ensure pam_motd is configured"
+  when:
+    - cis_ubuntu2604_rule_1_6_4
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.6.4 | find update-motd.d scripts that reveal OS/platform information"
+      ansible.builtin.stat:
+        path: "/etc/update-motd.d/{{ item }}"
+      loop: "{{ cis_ubuntu2604_update_motd_disable }}"
+      register: _cis_motd_scripts
+    - name: "SECTION1 | 1.6.4 | remove execute bit (run-parts skips them)"
+      ansible.builtin.file:
+        path: "{{ item.stat.path }}"
+        mode: "a-x"
+      loop: "{{ _cis_motd_scripts.results | selectattr('stat.exists') | list }}"
+      loop_control:
+        label: "{{ item.item }}"
+      when: item.stat.executable | default(false)
+
+- name: "SECTION1 | 1.6.5 | Ensure sshd warning Banner is configured"
+  when:
+    - cis_ubuntu2604_rule_1_6_5
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.6.5 | get the sshd Banner file"
+      ansible.builtin.shell: set -o pipefail && sshd -T 2>/dev/null | awk '$1 == "banner" {print $2}'
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: cis_ubuntu2604_sshd_banner_file
+      changed_when: false
+      failed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.6.5 | write site banner (skipped when Banner is /etc/issue.net, handled by 1.6.3)"
+      ansible.builtin.copy:
+        dest: "{{ cis_ubuntu2604_sshd_banner_file.stdout }}"
+        content: |
+          {{ cis_ubuntu2604_warning_banner }}
+        owner: root
+        group: root
+        mode: "0644"
+      when:
+        - cis_ubuntu2604_sshd_banner_file.stdout | default('none') not in ['', 'none', '/etc/issue.net']
+
+- name: "SECTION1 | 1.6.6 | Ensure access to /etc/motd is configured"
+  ansible.builtin.file:
+    dest: /etc/motd
+    state: touch
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_etc_issue_motd }}"
+  when:
+    - cis_ubuntu2604_rule_1_6_6
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.6.7 | Ensure access to /etc/issue is configured"
+  ansible.builtin.file:
+    dest: /etc/issue
+    state: file
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_etc_issue_motd }}"
+  when:
+    - cis_ubuntu2604_rule_1_6_7
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.6.8 | Ensure access to /etc/issue.net is configured"
+  ansible.builtin.file:
+    dest: /etc/issue.net
+    state: file
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_etc_issue_motd }}"
+  when:
+    - cis_ubuntu2604_rule_1_6_8
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.6.9 | Ensure access to pam_motd file is configured"
+  when:
+    - cis_ubuntu2604_rule_1_6_9
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.6.9 | find motd= files referenced by pam_motd"
+      ansible.builtin.shell: set -o pipefail && grep -hPo 'pam_motd\.so.*\bmotd=\K\S+' /etc/pam.d/* 2>/dev/null | sort -u
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
+      register: _cis_pam_motd_files
+      changed_when: false
+      failed_when: false
+      check_mode: false
+    - name: "SECTION1 | 1.6.9 | stat motd files"
+      ansible.builtin.stat:
+        path: "{{ item }}"
+      loop: "{{ _cis_pam_motd_files.stdout_lines | default([]) }}"
+      register: _cis_pam_motd_stat
+    - name: "SECTION1 | 1.6.9 | root:root, u-x,go-wx"
+      ansible.builtin.file:
+        path: "{{ item.item }}"
+        owner: root
+        group: root
+        mode: "u-x,go-wx"
+      loop: "{{ _cis_pam_motd_stat.results | selectattr('stat.exists') | list }}"
+      loop_control:
+        label: "{{ item.item }}"
+
+- name: "SECTION1 | 1.6.10 | Ensure access to sshd warning banner is configured"
+  ansible.builtin.file:
+    path: "{{ (cis_ubuntu2604_sshd_banner_file.stdout | default('') not in ['', 'none']) | ternary(cis_ubuntu2604_sshd_banner_file.stdout, '/etc/issue.net') }}"
+    owner: root
+    group: root
+    mode: "u-x,go-wx"
+  failed_when: false
+  when:
+    - cis_ubuntu2604_rule_1_6_10
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.6.11 | Ensure update-notifier-motd.service is not in use"
+  ansible.builtin.systemd_service:
+    name: update-notifier-motd.service
+    state: stopped
+    enabled: false
+    masked: true
+  failed_when: false
+  when:
+    - cis_ubuntu2604_rule_1_6_11
+    - ansible_virtualization_type != "docker"
+  tags:
+    - rule_1_6
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.6.12 | Ensure update-notifier-motd.timer is not in use"
+  ansible.builtin.systemd_service:
+    name: update-notifier-motd.timer
+    state: stopped
+    enabled: false
+    masked: true
+  failed_when: false
+  when:
+    - cis_ubuntu2604_rule_1_6_12
+    - ansible_virtualization_type != "docker"
+  tags:
+    - rule_1_6
+    - server_l1
+
+# ------------------------------------------------------------------------------
+
+- name: "SECTION1 | EXT ext_gdm_removed | Ensure GNOME Display Manager is removed"
+  ansible.builtin.apt:
+    name: gdm3
+    state: absent
+    purge: true
+  when:
+    - not cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_ext_gdm_removed
+  tags:
+    - rule_1_7
+    - server_l2
+
+- name: "SECTION1 | 1.7.1-5 | create folder under '/etc/dconf/db/*', for upcoming tasks"
+  when:
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+  notify: Update dconf
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.7.2-3 | create folder /etc/dconf/db/gdm.d"
+      ansible.builtin.file:
+        path: /etc/dconf/db/gdm.d
+        state: directory
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "0755"
+    - name: "SECTION1 | 1.7.4/6/8 | create folder /etc/dconf/db/local.d"
+      ansible.builtin.file:
+        path: /etc/dconf/db/local.d
+        state: directory
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "0755"
+    - name: "SECTION1 | 1.7.5/7/9 | create folder /etc/dconf/db/local.d/locks"
+      ansible.builtin.file:
+        path: /etc/dconf/db/local.d/locks
+        state: directory
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "0755"
+
+- name: "SECTION1 | 1.7.1 | Ensure GDM login banner is configured"
+  when:
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_1
+  notify: Update dconf
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.7.1 | Ensure GDM login banner is configured | file gdm"
+      ansible.builtin.template:
+        src: gdm/profile-gdm.j2
+        dest: /etc/dconf/profile/gdm
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+    - name: "SECTION1 | 1.7.1 | Ensure GDM login banner is configured | file 01-banner-message"
+      ansible.builtin.template:
+        src: gdm/01-banner-message.j2
+        dest: /etc/dconf/db/gdm.d/01-banner-message
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+    - name: "SECTION1 | 1.7.1 | Ensure GDM login banner is configured | gather users"
+      ansible.builtin.command: >
+        awk -F: '($3 >= 1000) && ($7 != "/usr/sbin/nologin") && ($7 != "/bin/false") {print $1}' /etc/passwd
+      register: cis_ubuntu2604_users_with_home
+      changed_when: false
+    - name: "SECTION1 | 1.7.1 | Ensure GDM login banner is configured | set gsettings banner message per use per user"
+      become: true
+      become_user: "{{ item }}"
+      ansible.builtin.command: "dbus-run-session -- gsettings set org.gnome.login-screen banner-message-text '{{ cis_ubuntu2604_warning_banner }}'"
+      register: cis_ubuntu2604_update_user_banner_message
+      changed_when: cis_ubuntu2604_update_user_banner_message.rc == 0
+      failed_when: false
+      loop: "{{ cis_ubuntu2604_users_with_home.stdout_lines }}"
+    - name: "SECTION1 | 1.7.1 | Ensure GDM login banner is configured | set gsettings activate banner message per user"
+      become: true
+      become_user: "{{ item }}"
+      ansible.builtin.command: "dbus-run-session -- gsettings set org.gnome.login-screen banner-message-enable true"
+      register: cis_ubuntu2604_activate_user_banner_message
+      changed_when: cis_ubuntu2604_activate_user_banner_message.rc == 0
+      failed_when: false
+      loop: "{{ cis_ubuntu2604_users_with_home.stdout_lines }}"
+
+- name: "SECTION1 | 1.7.2 | Ensure GDM disable-user-list is configured"
+  when:
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_2
+  notify: Update dconf
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.7.2 | Ensure GDM disable-user-list option is enabled | file gdm"
+      ansible.builtin.template:
+        src: gdm/profile-gdm.j2
+        dest: /etc/dconf/profile/gdm
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+    - name: "SECTION1 | 1.7.2 | Ensure GDM disable-user-list option is enabled | file 00-login-screen"
+      ansible.builtin.template:
+        src: gdm/00-login-screen.j2
+        dest: /etc/dconf/db/gdm.d/00-login-screen
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+    - name: "SECTION1 | 1.7.2 | Ensure GDM disable-user-list option is enabled | gather users"
+      ansible.builtin.command: >
+        awk -F: '($3 >= 1000) && ($7 != "/usr/sbin/nologin") && ($7 != "/bin/false") {print $1}' /etc/passwd
+      register: cis_ubuntu2604_users_with_home
+      changed_when: false
+    - name: "SECTION1 | 1.7.2 | Ensure GDM disable-user-list option is enabled | set gsettings disable user list per user"
+      become: true
+      become_user: "{{ item }}"
+      ansible.builtin.command: "dbus-run-session -- gsettings set org.gnome.login-screen disable-user-list true"
+      register: cis_ubuntu2604_disable_user_list
+      changed_when: cis_ubuntu2604_disable_user_list.rc == 0
+      failed_when: false
+      loop: "{{ cis_ubuntu2604_users_with_home.stdout_lines }}"
+
+- name: "SECTION1 | 1.7.3 | Ensure GDM screen lock is configured"
+  when:
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_3
+  notify: Update dconf
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.7.3 | Ensure GDM screen locks when the user is idle | file user"
+      ansible.builtin.template:
+        src: gdm/profile-user.j2
+        dest: /etc/dconf/profile/user
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+    - name: "SECTION1 | 1.7.3 | Ensure GDM screen locks when the user is idle | file 00-screensaver"
+      ansible.builtin.template:
+        src: gdm/00-screensaver.j2
+        dest: /etc/dconf/db/local.d/00-screensaver
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+    - name: "SECTION1 | 1.7.3 | Ensure GDM screen locks when the user is idle | gather users"
+      ansible.builtin.command: >
+        awk -F: '($3 >= 1000) && ($7 != "/usr/sbin/nologin") && ($7 != "/bin/false") {print $1}' /etc/passwd
+      register: cis_ubuntu2604_users_with_home
+      changed_when: false
+    - name: "SECTION1 | 1.7.3 | Ensure GDM screen locks when the user is idle | set gsettings set screensaver lock-delay per user"
+      become: true
+      become_user: "{{ item }}"
+      ansible.builtin.command: "dbus-run-session -- gsettings set org.gnome.desktop.screensaver lock-delay {{ cis_ubuntu2604_rule_gdm_lock_delay }}"
+      register: cis_ubuntu2604_screensaver_lock_delay
+      changed_when: cis_ubuntu2604_screensaver_lock_delay.rc == 0
+      failed_when: false
+      loop: "{{ cis_ubuntu2604_users_with_home.stdout_lines }}"
+    - name: "SECTION1 | 1.7.3 | Ensure GDM screen locks when the user is idle | set gsettings set session idle-delay per user"
+      become: true
+      become_user: "{{ item }}"
+      ansible.builtin.command: "dbus-run-session -- gsettings set org.gnome.desktop.session idle-delay {{ cis_ubuntu2604_rule_gdm_idle_delay }}"
+      register: cis_ubuntu2604_session_idle_delay
+      changed_when: cis_ubuntu2604_session_idle_delay.rc == 0
+      failed_when: false
+      loop: "{{ cis_ubuntu2604_users_with_home.stdout_lines }}"
+
+- name: "SECTION1 | 1.7.3 | Ensure GDM screen lock is configured"
+  ansible.builtin.template:
+    src: gdm/00-screensaver-locks.j2
+    dest: /etc/dconf/db/local.d/locks/00-screensaver
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+  when:
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_3
+  notify: Update dconf
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.7.4 | Ensure GDM automount is configured"
+  when:
+    - not cis_ubuntu2604_allow_autofs
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_4
+  notify: Update dconf
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l2
+  block:
+    - name: "SECTION1 | 1.7.4 | Ensure GDM automatic mounting of removable media is disabled"
+      ansible.builtin.template:
+        src: gdm/00-media-automount.j2
+        dest: /etc/dconf/db/local.d/00-media-automount
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+    - name: "SECTION1 | 1.7.4 | Ensure GDM automatic mounting of removable media is disabled | set gsettings disable automount per user"
+      become: true
+      become_user: "{{ item }}"
+      ansible.builtin.command: "dbus-run-session -- gsettings set org.gnome.desktop.media-handling automount false"
+      register: cis_ubuntu2604_disable_automount
+      changed_when: cis_ubuntu2604_disable_automount.rc == 0
+      failed_when: false
+      loop: "{{ cis_ubuntu2604_users_with_home.stdout_lines }}"
+    - name: "SECTION1 | 1.7.4 | Ensure GDM automatic mounting of removable media is disabled | set gsettings disable automount-open per user"
+      become: true
+      become_user: "{{ item }}"
+      ansible.builtin.command: "dbus-run-session -- gsettings set org.gnome.desktop.media-handling automount-open false"
+      register: cis_ubuntu2604_disable_automount_open
+      changed_when: cis_ubuntu2604_disable_automount_open.rc == 0
+      failed_when: false
+      loop: "{{ cis_ubuntu2604_users_with_home.stdout_lines }}"
+
+- name: "SECTION1 | 1.7.4 | Ensure GDM automount is configured"
+  ansible.builtin.template:
+    src: gdm/00-media-automount-locks.j2
+    dest: /etc/dconf/db/local.d/locks/00-media-automount
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+  when:
+    - not cis_ubuntu2604_allow_autofs
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_4
+  notify: Update dconf
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l2
+
+- name: "SECTION1 | 1.7.5 | Ensure GDM autorun-never is configured"
+  when:
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_5
+  notify: Update dconf
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l1
+  block:
+    - name: "SECTION1 | 1.7.5 | Ensure GDM autorun-never is enabled"
+      ansible.builtin.template:
+        src: gdm/00-media-autorun.j2
+        dest: /etc/dconf/db/local.d/00-media-autorun
+        owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+        group: "{{ cis_ubuntu2604_section1_group_default }}"
+        mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+    - name: "SECTION1 | 1.7.5 | Ensure GDM autorun-never is enabled | set gsettings enable autorun-never per user"
+      become: true
+      become_user: "{{ item }}"
+      ansible.builtin.command: "dbus-run-session -- gsettings set org.gnome.desktop.media-handling autorun-never true"
+      register: cis_ubuntu2604_enable_autorun_never
+      changed_when: cis_ubuntu2604_enable_autorun_never.rc == 0
+      failed_when: false
+      loop: "{{ cis_ubuntu2604_users_with_home.stdout_lines }}"
+
+- name: "SECTION1 | 1.7.5 | Ensure GDM autorun-never is configured"
+  ansible.builtin.template:
+    src: gdm/00-media-autorun-locks.j2
+    dest: /etc/dconf/db/local.d/locks/00-media-autorun
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+  when:
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_5
+  notify: Update dconf
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.7.6 | Ensure XDMCP is not enabled"
+  ansible.builtin.template:
+    src: gdm/custom.conf.j2
+    dest: /etc/gdm3/custom.conf
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+  when:
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_6
+  tags:
+    - rule_1_7
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION1 | 1.7.7 | Ensure Xwayland is configured"
+  ansible.builtin.template:
+    src: gdm/custom.conf.j2
+    dest: /etc/gdm3/custom.conf
+    owner: "{{ cis_ubuntu2604_section1_owner_default }}"
+    group: "{{ cis_ubuntu2604_section1_group_default }}"
+    mode: "{{ cis_ubuntu2604_section1_mode_default }}"
+  when:
+    - service_status_gdm3.stdout in ('loadedactive','loadedinactive')
+    - cis_ubuntu2604_allow_gdm_gui
+    - cis_ubuntu2604_rule_1_7_7
+  tags:
+    - rule_1_7
+    - server_l2
+    - workstation_l2

@@ -1,0 +1,1126 @@
+---
+# defaults file for ansible-cis-ubuntu-2604
+# Added by Kenneth Masis 09/21/2026
+
+# ------------------------------------------------------------------------------
+
+# CIS sections
+# ---------------------------------------
+cis_ubuntu2604_section1: true
+cis_ubuntu2604_section2: true
+cis_ubuntu2604_section3: true
+cis_ubuntu2604_section4: true
+cis_ubuntu2604_section5: true
+cis_ubuntu2604_section6: true
+cis_ubuntu2604_section7: true
+
+# CIS rules
+# ---------------------------------------
+# NOTE: relates to 'CIS sections' above.
+#       Section needs to be enabled to also take effect related rules
+## ---------------------------------------------------------------------------
+## CIS Ubuntu Linux 26.04 LTS Benchmark v1.0.0 rules (IDs match the XCCDF)
+## Level per rule is in the task tags (server_l1/server_l2/workstation_l1/workstation_l2)
+## SECTION 1 rules
+cis_ubuntu2604_rule_1_1_1_1: true # Ensure cramfs kernel module is not available | cramfs
+cis_ubuntu2604_rule_1_1_1_2: true # Ensure freevxfs kernel module is not available | freevxfs
+cis_ubuntu2604_rule_1_1_1_3: true # Ensure hfs kernel module is not available | hfs
+cis_ubuntu2604_rule_1_1_1_4: true # Ensure hfsplus kernel module is not available | hfsplus
+cis_ubuntu2604_rule_1_1_1_5: true # Ensure jffs2 kernel module is not available | jffs2
+cis_ubuntu2604_rule_1_1_1_6: true # Ensure overlay kernel module is not available | overlayfs
+cis_ubuntu2604_rule_1_1_1_7: true # Ensure squashfs kernel module is not available | squashfs - IMPACT: Snap packages utilizes squashfs as a compressed filesystem, disabling squashfs will cause Snap packages to fail.
+cis_ubuntu2604_rule_1_1_1_8: true # Ensure udf kernel module is not available | udf - IMPACT: Microsoft Azure requires the usage of udf.
+cis_ubuntu2604_rule_1_1_1_9: true # Ensure firewire-core kernel module is not available
+cis_ubuntu2604_rule_1_1_1_10: true # Ensure usb-storage kernel module is not available | usb-storage - IMPACT: Disabling the usb-storage module will disable any usage of USB storage devices.
+cis_ubuntu2604_rule_1_1_1_11: true # Ensure unused filesystems kernel modules are not available | unused filesystems
+cis_ubuntu2604_rule_1_1_2_1: true # /tmp as tmp.mount (tmpfs); covers 1.1.2.1.1-4
+cis_ubuntu2604_rule_1_1_2_1_2: true # Ensure nodev option set on /tmp partition
+cis_ubuntu2604_rule_1_1_2_1_3: true # Ensure nosuid option set on /tmp partition
+cis_ubuntu2604_rule_1_1_2_1_4: true # Ensure noexec option set on /tmp partition
+cis_ubuntu2604_rule_1_1_2_2: true # /dev/shm; covers 1.1.2.2.1-4
+cis_ubuntu2604_rule_1_1_2_2_2: true # Ensure nodev option set on /dev/shm partition
+cis_ubuntu2604_rule_1_1_2_2_3: true # Ensure nosuid option set on /dev/shm partition
+cis_ubuntu2604_rule_1_1_2_2_4: true # Ensure noexec option set on /dev/shm partition
+# cis_ubuntu2604_rule_1_1_2_3_1: n/a # Ensure separate partition exists for /home - requires repartitioning, not remediated
+cis_ubuntu2604_rule_1_1_2_3_2: true # Ensure nodev option set on /home partition
+cis_ubuntu2604_rule_1_1_2_3_3: true # Ensure nosuid option set on /home partition
+# cis_ubuntu2604_rule_1_1_2_4_1: n/a # Ensure separate partition exists for /var - requires repartitioning, not remediated
+cis_ubuntu2604_rule_1_1_2_4_2: true # Ensure nodev option set on /var partition
+cis_ubuntu2604_rule_1_1_2_4_3: true # Ensure nosuid option set on /var partition
+# cis_ubuntu2604_rule_1_1_2_5_1: n/a # Ensure separate partition exists for /var/tmp - requires repartitioning, not remediated
+cis_ubuntu2604_rule_1_1_2_5_2: true # Ensure nodev option set on /var/tmp partition
+cis_ubuntu2604_rule_1_1_2_5_3: true # Ensure nosuid option set on /var/tmp partition
+cis_ubuntu2604_rule_1_1_2_5_4: true # Ensure noexec option set on /var/tmp partition
+# cis_ubuntu2604_rule_1_1_2_6_1: n/a # Ensure separate partition exists for /var/log - requires repartitioning, not remediated
+cis_ubuntu2604_rule_1_1_2_6_2: true # Ensure nodev option set on /var/log partition
+cis_ubuntu2604_rule_1_1_2_6_3: true # Ensure nosuid option set on /var/log partition
+cis_ubuntu2604_rule_1_1_2_6_4: true # Ensure noexec option set on /var/log partition
+# cis_ubuntu2604_rule_1_1_2_7_1: n/a # Ensure separate partition exists for /var/log/audit - requires repartitioning, not remediated
+cis_ubuntu2604_rule_1_1_2_7_2: true # Ensure nodev option set on /var/log/audit partition
+cis_ubuntu2604_rule_1_1_2_7_3: true # Ensure nosuid option set on /var/log/audit partition
+cis_ubuntu2604_rule_1_1_2_7_4: true # Ensure noexec option set on /var/log/audit partition
+cis_ubuntu2604_rule_1_2_1_1: true # Ensure the source.list and .source files use the Signed-By option
+cis_ubuntu2604_rule_1_2_1_2: true # Ensure weak dependencies are configured
+cis_ubuntu2604_rule_1_2_1_3: true # Ensure access to gpg key files are configured
+cis_ubuntu2604_rule_1_2_1_4: true # Ensure access to /etc/apt/trusted.gpg.d directory is configured
+cis_ubuntu2604_rule_1_2_1_5: true # Ensure access to /etc/apt/auth.conf.d directory is configured
+cis_ubuntu2604_rule_1_2_1_6: true # Ensure access to files in the /etc/apt/auth.conf.d/ directory is configured
+cis_ubuntu2604_rule_1_2_1_7: true # Ensure access to /usr/share/keyrings directory is configured
+cis_ubuntu2604_rule_1_2_1_8: true # Ensure access to /etc/apt/sources.list.d directory is configured
+cis_ubuntu2604_rule_1_2_1_9: true # Ensure access to files in /etc/apt/sources.list.d are configured
+cis_ubuntu2604_rule_1_2_1_10: true # Ensure repositories are set to https in /etc/apt/sources.list
+cis_ubuntu2604_rule_1_2_1_11: true # Ensure repositories are set to https in /etc/apt/sources.list.d directory
+cis_ubuntu2604_rule_1_2_1_12: true # Ensure AllowInsecureRepositories is configured | IMPACT: apt update fails for unsigned repositories
+cis_ubuntu2604_rule_1_2_1_13: true # Ensure AllowWeakRepositories is configured
+cis_ubuntu2604_rule_1_2_1_14: true # Ensure AllowDowngradeToInsecureRepositories is configured
+cis_ubuntu2604_rule_1_2_1_15: true # Ensure Acquire::Check-Date is configured | IMPACT: needs working time sync
+cis_ubuntu2604_rule_1_2_2_1: false # Ensure updates, patches, and additional security software are installed | disabled by Kenneth Masis 05/13/2026
+cis_ubuntu2604_rule_1_3_1_1: true # Ensure apparmor packages are installed
+cis_ubuntu2604_rule_1_3_1_2: true # Ensure AppArmor is enabled
+cis_ubuntu2604_rule_1_3_1_3: false # Ensure all AppArmor Profiles are enforcing | NOTE: disabled - will run to have all in enforce-mode | NOTE: enforce-all AppArmor profiles - test before enabling
+cis_ubuntu2604_rule_1_3_1_4: true # Ensure kernel.apparmor_restrict_unprivileged_unconfined is enabled
+cis_ubuntu2604_rule_1_4_1: false # Ensure bootloader password is set | NOTE: depends also on 'cis_ubuntu2604_set_boot_pass' and 'cis_ubuntu2604_disable_boot_pass'
+cis_ubuntu2604_rule_1_4_2: true # Ensure access to bootloader config is configured
+cis_ubuntu2604_rule_1_5_1: true # Ensure fs.protected_hardlinks is configured
+cis_ubuntu2604_rule_1_5_2: true # Ensure fs.protected_symlinks is configured
+cis_ubuntu2604_rule_1_5_3: true # Ensure kernel.yama.ptrace_scope is configured
+cis_ubuntu2604_rule_1_5_4: true # Ensure fs.suid_dumpable is configured
+cis_ubuntu2604_rule_1_5_5: true # Ensure kernel.dmesg_restrict is configured
+cis_ubuntu2604_rule_1_5_6: true # Ensure prelink is not installed
+cis_ubuntu2604_rule_1_5_7: true # Ensure Automatic Error Reporting is configured
+cis_ubuntu2604_rule_1_5_8: true # Ensure kernel.kptr_restrict is configured
+cis_ubuntu2604_rule_1_5_9: true # Ensure kernel.randomize_va_space is configured
+cis_ubuntu2604_rule_1_5_10: true # Ensure core file size is configured
+cis_ubuntu2604_rule_1_5_11: true # Ensure systemd-coredump ProcessSizeMax is configured
+cis_ubuntu2604_rule_1_5_12: true # Ensure systemd-coredump Storage is configured
+cis_ubuntu2604_rule_1_6_1: true # Ensure /etc/motd is configured
+cis_ubuntu2604_rule_1_6_2: true # Ensure /etc/issue is configured
+cis_ubuntu2604_rule_1_6_3: true # Ensure /etc/issue.net is configured
+cis_ubuntu2604_rule_1_6_4: true # Ensure pam_motd is configured
+cis_ubuntu2604_rule_1_6_5: true # Ensure sshd warning Banner is configured
+cis_ubuntu2604_rule_1_6_6: true # Ensure access to /etc/motd is configured
+cis_ubuntu2604_rule_1_6_7: true # Ensure access to /etc/issue is configured
+cis_ubuntu2604_rule_1_6_8: true # Ensure access to /etc/issue.net is configured
+cis_ubuntu2604_rule_1_6_9: true # Ensure access to pam_motd file is configured
+cis_ubuntu2604_rule_1_6_10: true # Ensure access to sshd warning banner is configured
+cis_ubuntu2604_rule_1_6_11: true # Ensure update-notifier-motd.service is not in use
+cis_ubuntu2604_rule_1_6_12: true # Ensure update-notifier-motd.timer is not in use
+cis_ubuntu2604_rule_1_7_1: true # Ensure GDM login banner is configured | NOTE: depends also on 'cis_ubuntu2604_allow_gdm_gui'
+cis_ubuntu2604_rule_1_7_2: true # Ensure GDM disable-user-list is configured | NOTE: depends also on 'cis_ubuntu2604_allow_gdm_gui'
+cis_ubuntu2604_rule_1_7_3: true # Ensure GDM screen lock is configured | NOTE: depends also on 'cis_ubuntu2604_allow_gdm_gui'
+cis_ubuntu2604_rule_1_7_4: true # Ensure GDM automount is configured | NOTE: depends also on 'cis_ubuntu2604_allow_gdm_gui' and 'cis_ubuntu2604_allow_autofs'
+cis_ubuntu2604_rule_1_7_5: true # Ensure GDM autorun-never is configured | NOTE: depends also on 'cis_ubuntu2604_allow_gdm_gui'
+cis_ubuntu2604_rule_1_7_6: true # Ensure XDMCP is not enabled | NOTE: depends also on 'cis_ubuntu2604_allow_gdm_gui'
+cis_ubuntu2604_rule_1_7_7: true # Ensure Xwayland is configured
+## SECTION 2 rules
+cis_ubuntu2604_rule_2_1_1: true # Ensure autofs services are not in use | NOTE: depends also on 'cis_ubuntu2604_allow_autofs'
+cis_ubuntu2604_rule_2_1_1_remove: true # NOTE: depends also on 'cis_ubuntu2604_allow_autofs'
+cis_ubuntu2604_rule_2_1_2: true # Ensure avahi daemon services are not in use
+cis_ubuntu2604_rule_2_1_2_remove: true
+cis_ubuntu2604_rule_2_1_3: true # Ensure dhcp server services are not in use
+cis_ubuntu2604_rule_2_1_3_remove: true
+cis_ubuntu2604_rule_2_1_4: true # Ensure dns server services are not in use
+cis_ubuntu2604_rule_2_1_4_remove: true
+cis_ubuntu2604_rule_2_1_5: true # Ensure dnsmasq services are not in use
+cis_ubuntu2604_rule_2_1_5_remove: true
+cis_ubuntu2604_rule_2_1_6: true # Ensure ftp server services are not in use
+cis_ubuntu2604_rule_2_1_6_remove: true
+cis_ubuntu2604_rule_2_1_7: true # Ensure ldap server services are not in use
+cis_ubuntu2604_rule_2_1_7_remove: true
+cis_ubuntu2604_rule_2_1_8: true # Ensure message access server services are not in use
+cis_ubuntu2604_rule_2_1_8_remove: true
+cis_ubuntu2604_rule_2_1_9: true # Ensure network file system services are not in use
+cis_ubuntu2604_rule_2_1_9_remove: true
+cis_ubuntu2604_rule_2_1_10: true # Ensure nis server services are not in use
+cis_ubuntu2604_rule_2_1_10_remove: true
+cis_ubuntu2604_rule_2_1_11: true # Ensure print server services are not in use | NOTE: depends also on 'cis_ubuntu2604_allow_cups'
+cis_ubuntu2604_rule_2_1_11_remove: true # NOTE: depends also on 'cis_ubuntu2604_allow_cups'
+cis_ubuntu2604_rule_2_1_12: false # Ensure rpcbind services are not in use | Disable removing rpcbind
+cis_ubuntu2604_rule_2_1_12_remove: false
+cis_ubuntu2604_rule_2_1_13: true # Ensure rsync services are not in use
+cis_ubuntu2604_rule_2_1_13_remove: true
+cis_ubuntu2604_rule_2_1_14: true # Ensure samba file server services are not in use
+cis_ubuntu2604_rule_2_1_14_remove: true
+cis_ubuntu2604_rule_2_1_15: true # Ensure snmp services are not in use
+cis_ubuntu2604_rule_2_1_15_remove: true
+cis_ubuntu2604_rule_2_1_16: true # Ensure telnet server services are not in use
+cis_ubuntu2604_rule_2_1_16_remove: true
+cis_ubuntu2604_rule_2_1_17: true # Ensure tftp server services are not in use
+cis_ubuntu2604_rule_2_1_17_remove: true
+cis_ubuntu2604_rule_2_1_18: true # Ensure web proxy server services are not in use
+cis_ubuntu2604_rule_2_1_18_remove: true
+cis_ubuntu2604_rule_2_1_19: false # Ensure web server services are not in use
+cis_ubuntu2604_rule_2_1_19_remove: false  ## Do not remove apache -- updated by Kenneth Masis
+cis_ubuntu2604_rule_2_1_20: true # Ensure xinetd services are not in use
+cis_ubuntu2604_rule_2_1_20_remove: true
+cis_ubuntu2604_rule_2_1_21: false # Ensure X window server services are not in use | NOTE: depends also on 'cis_ubuntu2604_allow_gdm_gui'
+cis_ubuntu2604_rule_2_1_21_remove: false # NOTE: depends also on 'cis_ubuntu2604_allow_gdm_gui'
+cis_ubuntu2604_rule_2_1_22: false # Ensure mail transfer agents are configured for local-only mode | updated by Kenneth Masis
+cis_ubuntu2604_rule_2_1_23: false # Ensure only approved services are listening on a network interface | updated by Kenneth Masis
+cis_ubuntu2604_rule_2_2_1: true # Ensure nis client is not installed
+cis_ubuntu2604_rule_2_2_2: true # Ensure rsh client is not installed
+cis_ubuntu2604_rule_2_2_3: true # Ensure talk client is not installed
+cis_ubuntu2604_rule_2_2_4: true # Ensure telnet client is not installed
+cis_ubuntu2604_rule_2_2_5: true # Ensure ldap client is not installed
+cis_ubuntu2604_rule_2_2_6: true # Ensure ftp client is not installed
+cis_ubuntu2604_rule_2_3_1_1: true # Ensure a single time synchronization daemon is in use
+cis_ubuntu2604_rule_2_3_2_1: true # Ensure systemd-timesyncd configured with authorized timeserver
+cis_ubuntu2604_rule_2_3_2_2: true # Ensure systemd-timesyncd is enabled and running
+cis_ubuntu2604_rule_2_3_3_1: true # Ensure chrony is configured
+cis_ubuntu2604_rule_2_3_3_2: true # Ensure chrony is running as user _chrony
+cis_ubuntu2604_rule_2_3_3_3: true # Ensure chrony is enabled and running
+cis_ubuntu2604_rule_2_4_1_1: true # Ensure cron daemon is enabled and active
+cis_ubuntu2604_rule_2_4_1_2: true # Ensure access to /etc/crontab is configured
+cis_ubuntu2604_rule_2_4_1_3: true # Ensure access to /etc/cron.hourly is configured
+cis_ubuntu2604_rule_2_4_1_4: true # Ensure access to /etc/cron.daily is configured
+cis_ubuntu2604_rule_2_4_1_5: true # Ensure access to /etc/cron.weekly is configured
+cis_ubuntu2604_rule_2_4_1_6: true # Ensure access to /etc/cron.monthly is configured
+cis_ubuntu2604_rule_2_4_1_7: true # Ensure access to /etc/cron.yearly is configured
+cis_ubuntu2604_rule_2_4_1_8: true # Ensure access to /etc/cron.d is configured
+cis_ubuntu2604_rule_2_4_1_9: true # Ensure access to crontab is configured
+cis_ubuntu2604_rule_2_4_2_1: true # Ensure access to at is configured
+## SECTION 3 rules
+cis_ubuntu2604_rule_3_1_1: true # Ensure IPv6 status is identified | NOTE: depends also on 'cis_ubuntu2604_required_ipv6'
+cis_ubuntu2604_rule_3_1_2: true # Ensure wireless interfaces are not available
+cis_ubuntu2604_rule_3_1_3: true # Ensure bluetooth services are not in use
+cis_ubuntu2604_rule_3_1_3_remove: true
+cis_ubuntu2604_rule_3_2_1: true # Ensure atm kernel module is not available
+cis_ubuntu2604_rule_3_2_2: true # Ensure can kernel module is not available
+cis_ubuntu2604_rule_3_2_3: true # Ensure dccp kernel module is not available
+cis_ubuntu2604_rule_3_2_4: true # Ensure rds kernel module is not available
+cis_ubuntu2604_rule_3_2_5: true # Ensure sctp kernel module is not available
+cis_ubuntu2604_rule_3_2_6: true # Ensure tipc kernel module is not available
+cis_ubuntu2604_rule_3_2_7: true # Ensure unneeded network protocol kernel modules are not available | acts only on 'cis_ubuntu2604_net_modules_deny', otherwise report only
+cis_ubuntu2604_rule_3_3_1_1: true # Ensure net.ipv4.ip_forward is configured | IMPACT: k3s/Docker/K8s nodes need IP forwarding - set false in their group_vars
+cis_ubuntu2604_rule_3_3_1_2: true # Ensure net.ipv4.conf.all.forwarding is configured | IMPACT: see 3.3.1.1
+cis_ubuntu2604_rule_3_3_1_3: true # Ensure net.ipv4.conf.default.forwarding is configured | IMPACT: see 3.3.1.1
+cis_ubuntu2604_rule_3_3_1_4: true # Ensure net.ipv4.conf.all.send_redirects is configured
+cis_ubuntu2604_rule_3_3_1_5: true # Ensure net.ipv4.conf.default.send_redirects is configured
+cis_ubuntu2604_rule_3_3_1_6: true # Ensure net.ipv4.icmp_ignore_bogus_error_responses is configured
+cis_ubuntu2604_rule_3_3_1_7: true # Ensure net.ipv4.icmp_echo_ignore_broadcasts is configured
+cis_ubuntu2604_rule_3_3_1_8: true # Ensure net.ipv4.conf.all.accept_redirects is configured
+cis_ubuntu2604_rule_3_3_1_9: true # Ensure net.ipv4.conf.default.accept_redirects is configured
+cis_ubuntu2604_rule_3_3_1_10: true # Ensure net.ipv4.conf.all.secure_redirects is configured
+cis_ubuntu2604_rule_3_3_1_11: true # Ensure net.ipv4.conf.default.secure_redirects is configured
+cis_ubuntu2604_rule_3_3_1_12: true # Ensure net.ipv4.conf.all.rp_filter is configured
+cis_ubuntu2604_rule_3_3_1_13: true # Ensure net.ipv4.conf.default.rp_filter is configured
+cis_ubuntu2604_rule_3_3_1_14: true # Ensure net.ipv4.conf.all.accept_source_route is configured
+cis_ubuntu2604_rule_3_3_1_15: true # Ensure net.ipv4.conf.default.accept_source_route is configured
+cis_ubuntu2604_rule_3_3_1_16: true # Ensure net.ipv4.conf.all.log_martians is configured
+cis_ubuntu2604_rule_3_3_1_17: true # Ensure net.ipv4.conf.default.log_martians is configured
+cis_ubuntu2604_rule_3_3_1_18: true # Ensure net.ipv4.tcp_syncookies is configured
+cis_ubuntu2604_rule_3_3_1_19: true # Ensure net.ipv4.conf.all.route_localnet is configured
+cis_ubuntu2604_rule_3_3_2_1: true # Ensure net.ipv6.conf.all.forwarding is configured | IMPACT: see 3.3.1.1
+cis_ubuntu2604_rule_3_3_2_2: true # Ensure net.ipv6.conf.default.forwarding is configured | IMPACT: see 3.3.1.1
+cis_ubuntu2604_rule_3_3_2_3: true # Ensure net.ipv6.conf.all.accept_redirects is configured
+cis_ubuntu2604_rule_3_3_2_4: true # Ensure net.ipv6.conf.default.accept_redirects is configured
+cis_ubuntu2604_rule_3_3_2_5: true # Ensure net.ipv6.conf.all.accept_source_route is configured
+cis_ubuntu2604_rule_3_3_2_6: true # Ensure net.ipv6.conf.default.accept_source_route is configured
+cis_ubuntu2604_rule_3_3_2_7: true # Ensure net.ipv6.conf.all.accept_ra is configured
+cis_ubuntu2604_rule_3_3_2_8: true # Ensure net.ipv6.conf.default.accept_ra is configured
+## SECTION 4 rules
+cis_ubuntu2604_rule_4_1_1: true # Ensure ufw is installed | NOTE: 'cis_ubuntu2604_firewall == ufw'
+cis_ubuntu2604_rule_4_1_2: false # Ensure ufw service is configured | NOTE: 'cis_ubuntu2604_firewall == ufw'  -- Disabled ny Kenneth Masis
+cis_ubuntu2604_rule_4_1_3: true # Ensure ufw incoming default is configured | NOTE: 'cis_ubuntu2604_firewall == ufw'
+cis_ubuntu2604_rule_4_1_4: true # Ensure ufw outgoing default is configured | L2 - policy from 'cis_ubuntu2604_firewall_ufw_outgoing_policy'
+cis_ubuntu2604_rule_4_1_5: true # Ensure ufw routed default is configured
+## SECTION 5 rules
+cis_ubuntu2604_rule_5_1_1: true # Ensure access to /etc/ssh/sshd_config is configured
+cis_ubuntu2604_rule_5_1_2: true # Ensure access to /etc/ssh/sshd_config.d/ directory is configured
+cis_ubuntu2604_rule_5_1_3: true # Ensure access to SSH private host key files is configured
+cis_ubuntu2604_rule_5_1_4: true # Ensure access to SSH public host key files is configured
+cis_ubuntu2604_rule_5_1_5: true # Ensure sshd access is configured
+cis_ubuntu2604_rule_5_1_6: true # Ensure sshd Banner is configured
+cis_ubuntu2604_rule_5_1_7: true # Ensure sshd Ciphers are configured
+cis_ubuntu2604_rule_5_1_8: true # Ensure sshd ClientAliveInterval and ClientAliveCountMax are configured
+cis_ubuntu2604_rule_5_1_9: true # Ensure sshd DisableForwarding is enabled
+cis_ubuntu2604_rule_5_1_10: true # Ensure sshd GSSAPIAuthentication is disabled
+cis_ubuntu2604_rule_5_1_11: true # Ensure sshd HostbasedAuthentication is disabled
+cis_ubuntu2604_rule_5_1_12: true # Ensure sshd IgnoreRhosts is enabled
+cis_ubuntu2604_rule_5_1_13: true # Ensure sshd KexAlgorithms is configured
+cis_ubuntu2604_rule_5_1_14: true # Ensure sshd post-quantum cryptography key exchange algorithms are configured
+cis_ubuntu2604_rule_5_1_15: true # Ensure sshd LoginGraceTime is configured
+cis_ubuntu2604_rule_5_1_16: true # Ensure sshd LogLevel is configured
+cis_ubuntu2604_rule_5_1_17: true # Ensure sshd MACs are configured
+cis_ubuntu2604_rule_5_1_18: true # Ensure sshd MaxAuthTries is configured
+cis_ubuntu2604_rule_5_1_19: true # Ensure sshd MaxSessions is configured
+cis_ubuntu2604_rule_5_1_20: true # Ensure sshd MaxStartups is configured
+cis_ubuntu2604_rule_5_1_21: true # Ensure sshd PermitEmptyPasswords is disabled
+cis_ubuntu2604_rule_5_1_22: true # Ensure sshd PermitRootLogin is disabled
+cis_ubuntu2604_rule_5_1_23: true # Ensure sshd PermitUserEnvironment is disabled
+cis_ubuntu2604_rule_5_1_24: true # Ensure sshd UsePAM is enabled
+cis_ubuntu2604_rule_5_2_1: true # Ensure sudo is installed
+cis_ubuntu2604_rule_5_2_2: true # Ensure sudo commands use pty
+cis_ubuntu2604_rule_5_2_3: true # Ensure sudo log file exists
+cis_ubuntu2604_rule_5_2_4: true # Ensure users must provide password for escalation
+cis_ubuntu2604_rule_5_2_5: true # Ensure re-authentication for privilege escalation is not disabled globally
+cis_ubuntu2604_rule_5_2_6: true # Ensure sudo timestamp_timeout is configured
+cis_ubuntu2604_rule_5_2_7: true # Ensure access to the su command is restricted
+cis_ubuntu2604_rule_5_3_1_1: true # Ensure latest version of pam is installed
+cis_ubuntu2604_rule_5_3_1_2: true # Ensure latest version of libpam-modules is installed
+cis_ubuntu2604_rule_5_3_1_3: true # Ensure latest version of libpam-pwquality is installed
+cis_ubuntu2604_rule_5_3_1_4: true # Ensure latest version of cracklib-runtime is installed
+cis_ubuntu2604_rule_5_3_2_1: true # Ensure pam_unix module is enabled
+cis_ubuntu2604_rule_5_3_2_2: true # Ensure pam_faillock module is enabled
+cis_ubuntu2604_rule_5_3_2_3: true # Ensure pam_pwquality module is enabled
+cis_ubuntu2604_rule_5_3_2_4: true # Ensure pam_pwhistory module is enabled
+cis_ubuntu2604_rule_5_3_3_1_1: true # Ensure password failed attempts lockout is configured
+cis_ubuntu2604_rule_5_3_3_1_2: true # Ensure password unlock time is configured
+cis_ubuntu2604_rule_5_3_3_1_3: true # Ensure password failed attempts lockout includes root account
+cis_ubuntu2604_rule_5_3_3_2_1: true # Ensure password number of changed characters is configured
+cis_ubuntu2604_rule_5_3_3_2_2: true # Ensure password length is configured
+cis_ubuntu2604_rule_5_3_3_2_3: true # Ensure password complexity is configured
+cis_ubuntu2604_rule_5_3_3_2_4: true # Ensure password same consecutive characters is configured
+cis_ubuntu2604_rule_5_3_3_2_5: true # Ensure password maximum sequential characters is configured
+cis_ubuntu2604_rule_5_3_3_2_6: true # Ensure password dictionary check is enabled
+cis_ubuntu2604_rule_5_3_3_2_7: true # Ensure password quality checking is enforced
+cis_ubuntu2604_rule_5_3_3_2_8: true # Ensure password quality is enforced for the root user
+cis_ubuntu2604_rule_5_3_3_3_1: true # Ensure password history remember is configured
+cis_ubuntu2604_rule_5_3_3_3_2: true # Ensure password history is enforced for the root user
+cis_ubuntu2604_rule_5_3_3_3_3: true # Ensure pam_pwhistory includes use_authtok
+cis_ubuntu2604_rule_5_3_3_4_1: true # Ensure pam_unix does not include nullok
+cis_ubuntu2604_rule_5_3_3_4_2: true # Ensure pam_unix does not include remember
+cis_ubuntu2604_rule_5_3_3_4_3: true # Ensure pam_unix includes a strong password hashing algorithm
+cis_ubuntu2604_rule_5_3_3_4_4: true # Ensure pam_unix includes use_authtok
+cis_ubuntu2604_rule_5_4_1_1: true # Ensure password expiration is configured
+cis_ubuntu2604_rule_5_4_1_2: true # Ensure minimum password days is configured
+cis_ubuntu2604_rule_5_4_1_3: true # Ensure password expiration warning days is configured
+cis_ubuntu2604_rule_5_4_1_4: true # Ensure strong password hashing algorithm is configured
+cis_ubuntu2604_rule_5_4_1_5: true # Ensure inactive password lock is configured
+cis_ubuntu2604_rule_5_4_1_6: true # Ensure all users last password change date is in the past
+cis_ubuntu2604_rule_5_4_2_1: true # Ensure root is the only UID 0 account
+cis_ubuntu2604_rule_5_4_2_2: true # Ensure root is the only GID 0 account
+cis_ubuntu2604_rule_5_4_2_3: true # Ensure group root is the only GID 0 group
+cis_ubuntu2604_rule_5_4_2_4: true # Ensure root account access is controlled
+cis_ubuntu2604_rule_5_4_2_5: true # Ensure root path integrity
+cis_ubuntu2604_rule_5_4_2_6: true # Ensure root user umask is configured
+cis_ubuntu2604_rule_5_4_2_7: true # Ensure system accounts do not have a valid login shell
+cis_ubuntu2604_rule_5_4_2_8: true # Ensure accounts without a valid login shell are locked
+cis_ubuntu2604_rule_5_4_3_1: true # Ensure nologin is not listed in /etc/shells
+cis_ubuntu2604_rule_5_4_3_2: true # Ensure default user shell timeout is configured
+cis_ubuntu2604_rule_5_4_3_3: true # Ensure default user umask is configured
+## SECTION 6 rules
+cis_ubuntu2604_rule_6_1_1_1_1: true # Ensure journald service is active
+cis_ubuntu2604_rule_6_1_1_1_2: true # Ensure systemd-journal-remote service is not in use | NOTE: journald-remote - depends also on 'cis_ubuntu2604_preferred_capturing_log_method' and 'cis_ubuntu2604_set_journal_upload'
+cis_ubuntu2604_rule_6_1_1_1_3: true # Ensure journald is configured to send logs to rsyslog | NOTE: rsyslog - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_rule_6_1_1_1_4: true # Ensure journald log file access is configured
+cis_ubuntu2604_rule_6_1_1_1_5: true # Ensure journald log file rotation is configured
+cis_ubuntu2604_rule_6_1_1_1_6: true # Ensure journald Storage is configured | NOTE: journald - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_rule_6_1_1_1_7: true # Ensure journald Compress is configured | NOTE: journald - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_rule_6_1_2_1: true # Ensure rsyslog is installed | NOTE: rsyslog - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_rule_6_1_2_2: true # Ensure rsyslog service is enabled and active | NOTE: rsyslog - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_rule_6_1_2_3: true # Ensure rsyslog log file creation mode is configured | NOTE: rsyslog - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_rule_6_1_2_4: true # Ensure rsyslog logging is configured | NOTE: rsyslog - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_rule_6_1_2_5: true # Ensure rsyslog is configured to send logs to a remote log host | NOTE: rsyslog-remote - depends also on 'cis_ubuntu2604_preferred_capturing_log_method' and 'cis_ubuntu2604_set_rsyslog_remote'
+cis_ubuntu2604_rule_6_1_2_6: true # Ensure rsyslog is not configured to receive logs from a remote client | NOTE: rsyslog - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_rule_6_1_2_7: true # Ensure logrotate is configured | NOTE: rsyslog - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_rule_6_1_2_8: true # Ensure rsyslog-gnutls is installed
+cis_ubuntu2604_rule_6_1_2_9: true # Ensure rsyslog forwarding uses gtls | only when 'cis_ubuntu2604_set_rsyslog_remote_tls'
+cis_ubuntu2604_rule_6_1_2_10: true # Ensure rsyslog CA certificates are configured | only when 'cis_ubuntu2604_set_rsyslog_remote_tls'
+cis_ubuntu2604_rule_6_1_3_1: false # Ensure access to all logfiles has been configured | Disabled by Kenneth Masis 12/22/2025
+cis_ubuntu2604_rule_6_2_1_1: true # Ensure auditd packages are installed
+cis_ubuntu2604_rule_6_2_1_2: true # Ensure auditd service is enabled and active
+cis_ubuntu2604_rule_6_2_1_3: true # Ensure auditing for processes that start prior to auditd is enabled
+cis_ubuntu2604_rule_6_2_1_4: true # Ensure audit_backlog_limit is configured
+cis_ubuntu2604_rule_6_2_2_1: true # Ensure audit log storage size is configured
+cis_ubuntu2604_rule_6_2_2_2: true # Ensure audit logs are not automatically deleted
+cis_ubuntu2604_rule_6_2_2_3: true # Ensure system is disabled when audit logs are full
+cis_ubuntu2604_rule_6_2_2_4: true # Ensure system warns when audit logs are low on space
+cis_ubuntu2604_rule_6_2_3_1: true # Ensure modification of the /etc/sudoers file is collected
+cis_ubuntu2604_rule_6_2_3_2: true # Ensure actions as another user are always logged
+cis_ubuntu2604_rule_6_2_3_3: true # Ensure events that modify the sudo log file are collected
+cis_ubuntu2604_rule_6_2_3_4: true # Ensure events that modify date and time information are collected
+cis_ubuntu2604_rule_6_2_3_5: true # Ensure events that modify sethostname and setdomainname are collected
+cis_ubuntu2604_rule_6_2_3_6: true # Ensure events that modify /etc/issue and /etc/issue.net are collected
+cis_ubuntu2604_rule_6_2_3_7: true # Ensure events that modify /etc/hosts and /etc/hostname are collected
+cis_ubuntu2604_rule_6_2_3_8: true # Ensure events that modify the system's network environment are collected
+cis_ubuntu2604_rule_6_2_3_9: true # Ensure events that modify /etc/NetworkManager directory are collected
+cis_ubuntu2604_rule_6_2_3_10: true # Ensure use of privileged commands are collected
+cis_ubuntu2604_rule_6_2_3_11: true # Ensure unsuccessful file access attempts are collected
+cis_ubuntu2604_rule_6_2_3_12: true # Ensure events that modify /etc/group information are collected
+cis_ubuntu2604_rule_6_2_3_13: true # Ensure events that modify /etc/passwd information are collected
+cis_ubuntu2604_rule_6_2_3_14: true # Ensure events that modify /etc/shadow and /etc/gshadow are collected
+cis_ubuntu2604_rule_6_2_3_15: true # Ensure events that modify /etc/security/opasswd are collected
+cis_ubuntu2604_rule_6_2_3_16: true # Ensure events that modify /etc/nsswitch.conf file are collected
+cis_ubuntu2604_rule_6_2_3_17: true # Ensure events that modify /etc/pam.conf and /etc/pam.d/ information are collected
+cis_ubuntu2604_rule_6_2_3_18: true # Ensure discretionary access control permission modification events chmod,fchmod,fchmodat,fchmodat2 are collected
+cis_ubuntu2604_rule_6_2_3_19: true # Ensure discretionary access control permission modification events chown,fchown,lchown,fchownat are collected
+cis_ubuntu2604_rule_6_2_3_20: true # Ensure discretionary access control permission modification events setxattr,lsetxattr,fsetxattr,removexattr,lremovexattr,fremovexattr collected
+cis_ubuntu2604_rule_6_2_3_21: true # Ensure successful file system mounts are collected
+cis_ubuntu2604_rule_6_2_3_22: true # Ensure session initiation information is collected
+cis_ubuntu2604_rule_6_2_3_23: true # Ensure login and logout events are collected
+cis_ubuntu2604_rule_6_2_3_24: true # Ensure unlink file deletion events by users are collected
+cis_ubuntu2604_rule_6_2_3_25: true # Ensure rename file deletion events by users are collected
+cis_ubuntu2604_rule_6_2_3_26: true # Ensure events that modify the system's Mandatory Access Controls are collected
+cis_ubuntu2604_rule_6_2_3_27: true # Ensure successful and unsuccessful attempts to use the chcon command are collected
+cis_ubuntu2604_rule_6_2_3_28: true # Ensure successful and unsuccessful attempts to use the setfacl command are collected
+cis_ubuntu2604_rule_6_2_3_29: true # Ensure successful and unsuccessful attempts to use the chacl command are collected
+cis_ubuntu2604_rule_6_2_3_30: true # Ensure successful and unsuccessful attempts to use the usermod command are collected
+cis_ubuntu2604_rule_6_2_3_31: true # Ensure kernel module loading unloading and modification is collected
+cis_ubuntu2604_rule_6_2_3_32: true # Ensure kernel 'init_module' and 'finit_module' loading unloading and modification is collected
+cis_ubuntu2604_rule_6_2_3_33: true # Ensure kernel 'delete_module' loading unloading and modification is collected
+cis_ubuntu2604_rule_6_2_3_34: true # Ensure the audit configuration is loaded regardless of errors
+cis_ubuntu2604_rule_6_2_3_35: true # Ensure the audit configuration is immutable
+cis_ubuntu2604_rule_6_2_3_36: true # Ensure the running and on disk configuration is the same | implicit: every audit task notifies 'augenrules --load'
+cis_ubuntu2604_rule_6_2_4_1: true # Ensure audit log files mode is configured
+cis_ubuntu2604_rule_6_2_4_2: true # Ensure audit log files owner is configured
+cis_ubuntu2604_rule_6_2_4_3: true # Ensure audit log files group owner is configured
+cis_ubuntu2604_rule_6_2_4_4: true # Ensure the audit log file directory mode is configured
+cis_ubuntu2604_rule_6_2_4_5: true # Ensure audit configuration files mode is configured
+cis_ubuntu2604_rule_6_2_4_6: true # Ensure audit configuration files owner is configured
+cis_ubuntu2604_rule_6_2_4_7: true # Ensure audit configuration files group owner is configured
+cis_ubuntu2604_rule_6_2_4_8: true # Ensure audit tools mode is configured
+cis_ubuntu2604_rule_6_2_4_9: true # Ensure audit tools owner is configured
+cis_ubuntu2604_rule_6_2_4_10: true # Ensure audit tools group owner is configured
+cis_ubuntu2604_rule_6_3_1: true # Ensure AIDE is installed | NOTE: depends also on 'cis_ubuntu2604_install_aide|cis_ubuntu2604_config_aide'
+cis_ubuntu2604_rule_6_3_2: true # Ensure filesystem integrity is regularly checked | NOTE: depends also on 'cis_ubuntu2604_install_aide|cis_ubuntu2604_config_aide'
+cis_ubuntu2604_rule_6_3_3: true # Ensure cryptographic mechanisms are used to protect the integrity of audit tools | NOTE: depends also on 'cis_ubuntu2604_install_aide|cis_ubuntu2604_config_aide'
+## SECTION 7 rules
+cis_ubuntu2604_rule_7_1_1: true # Ensure access to /etc/passwd is configured
+cis_ubuntu2604_rule_7_1_2: true # Ensure access to /etc/passwd- is configured
+cis_ubuntu2604_rule_7_1_3: true # Ensure access to /etc/group is configured
+cis_ubuntu2604_rule_7_1_4: true # Ensure access to /etc/group- is configured
+cis_ubuntu2604_rule_7_1_5: true # Ensure access to /etc/shadow is configured
+cis_ubuntu2604_rule_7_1_6: true # Ensure access to /etc/shadow- is configured
+cis_ubuntu2604_rule_7_1_7: true # Ensure access to /etc/gshadow is configured
+cis_ubuntu2604_rule_7_1_8: true # Ensure access to /etc/gshadow- is configured
+cis_ubuntu2604_rule_7_1_9: true # Ensure access to /etc/shells is configured
+cis_ubuntu2604_rule_7_1_10: true # Ensure access to /etc/security/opasswd is configured
+cis_ubuntu2604_rule_7_1_11: false # Ensure world writable files and directories are secured | NOTE: disabled by kmasis
+cis_ubuntu2604_rule_7_1_12: false # Ensure no files or directories without an owner and a group exist | NOTE: disabled by kmasis
+cis_ubuntu2604_rule_7_1_13: true # Ensure SUID and SGID files are reviewed
+cis_ubuntu2604_rule_7_2_1: true # Ensure accounts in /etc/passwd use shadowed passwords
+cis_ubuntu2604_rule_7_2_2: true # Ensure /etc/shadow password fields are not empty
+cis_ubuntu2604_rule_7_2_3: true # Ensure all groups in /etc/passwd exist in /etc/group
+cis_ubuntu2604_rule_7_2_4: true # Ensure shadow group is empty
+cis_ubuntu2604_rule_7_2_5: true # Ensure no duplicate UIDs exist
+cis_ubuntu2604_rule_7_2_6: true # Ensure no duplicate GIDs exist
+cis_ubuntu2604_rule_7_2_7: true # Ensure no duplicate user names exist
+cis_ubuntu2604_rule_7_2_8: true # Ensure no duplicate group names exist
+cis_ubuntu2604_rule_7_2_9: true # Ensure local interactive user home directories are configured
+cis_ubuntu2604_rule_7_2_10: true # Ensure local interactive user dot files access is configured
+cis_ubuntu2604_rule_7_2_11: true # Ensure local interactive user dot directories access is configured
+
+## ---------------------------------------------------------------------------
+## Extensions: not part of CIS 26.04 v1.0.0 (carried over from the 24.04 role)
+cis_ubuntu2604_ext_apt_repo_info: true
+cis_ubuntu2604_ext_apparmor_complain: false # NOTE: disabled - will run to have all in complain-mode
+cis_ubuntu2604_ext_gdm_removed: true
+cis_ubuntu2604_ext_ufw_no_iptables_persistent: true # NOTE: 'cis_ubuntu2604_firewall == ufw'
+cis_ubuntu2604_ext_ufw_loopback: true # NOTE: 'cis_ubuntu2604_firewall == ufw'
+cis_ubuntu2604_ext_ufw_outbound: true # NOTE: 'cis_ubuntu2604_firewall == ufw'
+cis_ubuntu2604_ext_ufw_open_ports: true # NOTE: 'cis_ubuntu2604_firewall == ufw'
+cis_ubuntu2604_ext_nftables_1: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_nftables_2: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_nftables_3: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_nftables_4: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_nftables_5: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_nftables_6: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_nftables_7: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_nftables_8: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_nftables_9: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_nftables_10: false # NOTE: 'cis_ubuntu2604_firewall == nftables'
+cis_ubuntu2604_ext_iptables_1_1: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_1_2: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_1_3: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_2_1: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_2_2: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_2_3: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_2_4: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_3_1: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_3_2: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_3_3: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_iptables_3_4: false # NOTE: 'cis_ubuntu2604_firewall == iptables'
+cis_ubuntu2604_ext_ssh_cleanup: true # NOTE: EXTENDED
+cis_ubuntu2604_ext_ssh_hardening: true # NOTE: EXTENDED - own added, not included in CIS
+cis_ubuntu2604_ext_ssh_pubkey: true # NOTE: EXTENDED - depends also on 'cis_ubuntu2604_ext_ssh_pubkey_key'
+cis_ubuntu2604_ext_journal_remote_install: true # NOTE: journald-remote - depends also on 'cis_ubuntu2604_preferred_capturing_log_method' and 'cis_ubuntu2604_set_journal_upload'
+cis_ubuntu2604_ext_journal_upload: true # NOTE: journald-remote - depends also on 'cis_ubuntu2604_preferred_capturing_log_method' and 'cis_ubuntu2604_set_journal_upload'
+cis_ubuntu2604_ext_journald_no_forward: true # NOTE: journald - depends also on 'cis_ubuntu2604_preferred_capturing_log_method'
+cis_ubuntu2604_ext_audit_log_file: true # NOTE: EXTENDED
+
+# ---------------------------------------
+# Excluding paths and filesystems
+#
+cis_excluded_fstypes:
+  - nfs
+  - nfs4
+  - cifs
+  - smb
+  - proc
+  - vfat
+  - iso9660
+  - efivarfs
+  - selinuxfs
+  - lustre
+
+cis_excluded_fstypes_regex: "{{ cis_excluded_fstypes | join('|') }}"
+
+cis_excluded_paths:
+  - /kubelet
+  - /containerd
+  - /MRI_PUBDS
+  - /MRI_DATA
+  - /XNATdata
+  - /MWALLDATA2
+  - /MWALLDATA2
+  - /MRI_WORKDATA
+  - /HORGA_DATA
+  - /Data
+  - /NINAGAOS
+  - /mindsmb
+  - /MIND-src
+  - /mrioperations
+
+# ------------------------------------------------------------------------------
+# HELPER
+# ---------------------------------------
+cis_ubuntu2604_regex_base_search: '^(#(\s)*)?'
+cis_ubuntu2604_regex_base_search_equals: '\s*=.*$'
+cis_ubuntu2604_shell_executable: /bin/bash
+cis_ubuntu2604_print_info_join_by: "\n"
+
+# SPECIAL options rule overview
+# ---------------------------------------
+# BOOTLOADER set (cis_ubuntu2604_rule_1_4_1)
+cis_ubuntu2604_set_boot_pass: false
+cis_ubuntu2604_disable_boot_pass: true
+# autofs allow auto mount (cis_ubuntu2604_rule_1_7_4|cis_ubuntu2604_rule_1_7_4|cis_ubuntu2604_rule_2_1_1)
+cis_ubuntu2604_allow_autofs: false
+# gdm allow, else remove (cis_ubuntu2604_rule_1_7_*,cis_ubuntu2604_rule_2_1_21)
+cis_ubuntu2604_allow_gdm_gui: false
+# cups allow printer service, else remove (cis_ubuntu2604_rule_2_2_3)
+cis_ubuntu2604_allow_cups: false
+# ipv6 is required (cis_ubuntu2604_rule_3_1_1)
+cis_ubuntu2604_required_ipv6: false
+# cis_ubuntu2604_journal_upload_url (cis_ubuntu2604_ext_journal_remote_install-4)
+cis_ubuntu2604_set_journal_upload: false
+# cis_ubuntu2604_journal_upload_url (cis_ubuntu2604_rule_6_1_2_5)
+cis_ubuntu2604_set_rsyslog_remote: false
+# AIDE perform install/config (cis_ubuntu2604_rule_6_3_1-3)
+cis_ubuntu2604_install_aide: true # NOTE: depends also on 'cis_ubuntu2604_config_aide'
+cis_ubuntu2604_config_aide: true
+
+## Default variables for services 2.1.1-20
+cis_ubuntu2604_allow_avahi: false
+cis_ubuntu2604_allow_dhcp: false
+cis_ubuntu2604_allow_dns: false
+cis_ubuntu2604_allow_dnsmasq: false
+cis_ubuntu2604_allow_vsftpd: false
+cis_ubuntu2604_allow_ldap: false
+cis_ubuntu2604_allow_dovecot: false
+cis_ubuntu2604_allow_nfs: false
+cis_ubuntu2604_allow_nis: false
+## cis_ubuntu2604_allow_cups   ## Defined above
+cis_ubuntu2604_allow_rpcbind: true  ## always enabled by Kenneth Masis
+cis_ubuntu2604_allow_rsync: true ## always enabled by Kenneth Masis
+cis_ubuntu2604_allow_samba: false
+cis_ubuntu2604_allow_snmp: false
+cis_ubuntu2604_allow_telnet_server: false
+cis_ubuntu2604_allow_tftp: false
+cis_ubuntu2604_allow_squid: false
+cis_ubuntu2604_allow_web_server: true  ##apache2,httpd,nginx
+cis_ubuntu2604_allow_xinetd: false
+
+# ------------------------------------------------------------------------------
+
+# SPECIAL variables
+# ---------------------------------------
+# Ensure unused filesystems kernel modules are not available (cis_ubuntu2604_rule_1_1_1_11)
+cis_ubuntu2604_fs_known_vulnerable:
+  - afs
+  - ceph
+  - cifs
+  - exfat
+  - ext
+  - fat
+  - fscache
+  - fuse
+  - gfs2
+  - nfs_common
+  - nfsd
+  - smbfs_common
+cis_ubuntu2604_fs_ignored: # these filesystem won't be disabled
+  - xfs
+  - vfat
+  - ext2
+  - ext3
+  - ext4
+
+cis_ubuntu2604_rule_1_1_2_1_tmp_size: 2G
+# cis_ubuntu2604_rule_1_1_2_2_shm_size: 2G
+
+# bootloader password. 'random' makes random password (cis_ubuntu2604_rule_1_4_1)
+cis_ubuntu2604_bootloader_password: random # pragma: allowlist secret
+# grub default file path (cis_ubuntu2604_rule_1_3_1_2)
+cis_ubuntu2604_default_grub_file: /etc/default/grub
+# gdm banner message (cis_ubuntu2604_rule_1_7_1)
+cis_ubuntu2604_warning_banner: Authorized users only. All activity may be monitored and reported.
+# (cis_ubuntu2604_rule_1_7_3)
+cis_ubuntu2604_rule_gdm_lock_delay: 5
+cis_ubuntu2604_rule_gdm_idle_delay: 900
+
+# choose time synchronization (cis_ubuntu2604_rule_2_3_1_1)
+cis_ubuntu2604_time_synchronization_service: chrony # chrony | systemd-timesyncd
+cis_ubuntu2604_time_synchronization_time_server:
+  - uri: time.cloudflare.com
+    config: iburst
+  - uri: ntp.ubuntu.com
+    config: iburst
+  # NTS example (needs outbound TCP/4460):  - { uri: time.cloudflare.com, config: "iburst nts" }
+  # 'type' may be 'server' (default) or 'pool'
+# 26.04: keep Ubuntu-shipped NTS pools from /etc/chrony/sources.d in addition to the list above
+cis_ubuntu2604_chrony_use_distro_sources: false
+cis_ubuntu2604_chrony_use_dhcp_sources: false
+# general path for sysctl conf file
+cis_ubuntu2604_sysctl_file_path: /etc/sysctl.conf
+# cron allow users (cis_ubuntu2604_rule_2_4_1_9)
+cis_ubuntu2604_cron_allow_users:
+  - root
+# at allow users (cis_ubuntu2604_rule_2_4_2_1)
+cis_ubuntu2604_at_allow_users:
+  - root
+
+# choose firewall (cis_ubuntu2604_rule_4_*)
+cis_ubuntu2604_firewall: ufw # ufw | nftables | iptables
+# define if outgoing traffic should be default deny or allow (cis_ubuntu2604_rule_4_1_3)
+cis_ubuntu2604_firewall_ufw_outgoing_policy: deny
+# defined nftable table name (cis_ubuntu2604_ext_nftables_4-9)
+cis_ubuntu2604_firewall_nftables_table_name: filter
+
+# (cis_ubuntu2604_ext_ufw_open_ports)
+cis_ubuntu2604_firewall_rules_exist_open_ports:
+  []
+  # - rule: allow
+  #   port: 80
+  #   direction: in
+  #   protocol: any
+  #   comment: "allow http in"
+
+# ssh conf's
+# allows/denies for users/groups (cis_ubuntu2604_rule_5_1_5)
+# 'optional:' cis_ubuntu2604_ssh_allow_users: root,user
+# 'optional:' cis_ubuntu2604_ssh_allow_groups: root,ssh
+# 'optional:' cis_ubuntu2604_ssh_deny_users: root,user
+# 'optional:' cis_ubuntu2604_ssh_deny_groups: root,ssh
+# Ciphers (cis_ubuntu2604_rule_5_1_7)
+cis_ubuntu2604_ssh_ciphers:
+  # - chacha20-poly1305@openssh.com # NOTE: (CVE-2023-48795)
+  - aes256-gcm@openssh.com
+  - aes128-gcm@openssh.com
+  - aes256-ctr
+  - aes192-ctr
+  - aes128-ctr
+# (cis_ubuntu2604_rule_5_1_8)
+cis_ubuntu2604_ssh_client_alive_interval: 15
+cis_ubuntu2604_ssh_client_alive_count_max: 3
+# KexAlgorithms (cis_ubuntu2604_rule_5_1_13)
+# 26.04 ships OpenSSH 10.2: hybrid post-quantum KEX is the default. Keep it first; OpenSSH 10.1+
+# clients warn when a connection is not using a PQ KEX. Verify against the 26.04 benchmark's
+# 5.1.12 weak list with CIS-CAT before changing.
+cis_ubuntu2604_ssh_kex_algorithms:
+  - mlkem768x25519-sha256
+  - sntrup761x25519-sha512
+  - sntrup761x25519-sha512@openssh.com
+  - curve25519-sha256
+  - curve25519-sha256@libssh.org
+  - ecdh-sha2-nistp521
+  - ecdh-sha2-nistp384
+  - ecdh-sha2-nistp256
+  - diffie-hellman-group-exchange-sha256
+# 5.1.14: hybrid post-quantum KEX required by the 26.04 benchmark (OpenSSH >= 9.9)
+cis_ubuntu2604_ssh_pq_kex:
+  - mlkem768x25519-sha256
+  - sntrup761x25519-sha512
+cis_ubuntu2604_ssh_kex_algorithms_effective: >-
+  {{ ((cis_ubuntu2604_ssh_pq_kex if cis_ubuntu2604_rule_5_1_14 | default(true) | bool else [])
+      + cis_ubuntu2604_ssh_kex_algorithms) | unique }}
+# log level (cis_ubuntu2604_rule_5_1_15)
+cis_ubuntu2604_ssh_login_grace_time: 60
+# log level (cis_ubuntu2604_rule_5_1_16)
+cis_ubuntu2604_ssh_log_level: VERBOSE # VERBOSE | INFO
+# MACs (cis_ubuntu2604_rule_5_1_17)
+cis_ubuntu2604_ssh_macs:
+  - hmac-sha2-512 # NOTE: FIPS 140 approved
+  # - hmac-sha2-384 # NOTE: FIPS 140 approved - note available under ubuntu
+  - hmac-sha2-256 # NOTE: FIPS 140 approved
+  - hmac-sha1 # NOTE: FIPS 140 approved
+  - umac-128@openssh.com
+  # - hmac-sha2-512-etm@openssh.com # NOTE: (CVE-2023-48795)
+  # - hmac-sha2-256-etm@openssh.com # NOTE: (CVE-2023-48795)
+  # - umac-128-etm@openssh.com # NOTE: (CVE-2023-48795)
+# (cis_ubuntu2604_rule_5_1_18)
+cis_ubuntu2604_ssh_max_auth_tries: 4
+# (cis_ubuntu2604_rule_5_1_19)
+cis_ubuntu2604_ssh_max_sessions: 10
+# (cis_ubuntu2604_rule_5_1_22)
+cis_ubuntu2604_ssh_permit_root_login: "no"
+# (cis_ubuntu2604_ext_ssh_hardening)
+cis_ubuntu2604_ssh_port: 22
+cis_ubuntu2604_ssh_address_family: "inet"
+cis_ubuntu2604_ssh_authentication_methods: "publickey"
+cis_ubuntu2604_ssh_password_authentication: "no"
+cis_ubuntu2604_ssh_allow_agent_forwarding: "no"
+cis_ubuntu2604_ssh_tcp_keep_alive: "no"
+cis_ubuntu2604_ssh_x11_forwarding: "no"
+cis_ubuntu2604_ssh_allow_tcp_forwarding: "no"
+# (cis_ubuntu2604_ext_ssh_pubkey)
+cis_ubuntu2604_ext_ssh_pubkey_user: "{{ ansible_user }}"
+# cis_ubuntu2604_ext_ssh_pubkey_key: "<ADD_PUB_KEY>"
+
+# (cis_ubuntu2604_rule_5_2_4)
+cis_ubuntu2604_sudo_nopasswd_exceptions:
+  - ubuntu
+  - ec2-user
+  - kennethnypi
+  - angienypi
+  - waseemnypi
+  - ansible-user
+  
+# ------------------------------------------------------------------------------
+# 26.04: sudo provider. 'sudo-rs' is the distro default; 'sudo.ws' is the original C sudo.
+# sudo-rs has no 'logfile' option (syslog only) and no I/O logging, see rule 5.2.3 handling.
+cis_ubuntu2604_sudo_provider: sudo-rs # sudo-rs | sudo.ws
+# when true, the role pins /usr/bin/sudo to the provider above via update-alternatives
+cis_ubuntu2604_manage_sudo_provider: false
+# sudo-rs only: route syslog 'sudo' messages to cis_ubuntu2604_audit_sudo_log_file via rsyslog
+# (compensating control for 5.2.3, keeps the 6.2.3.3 audit watch meaningful)
+cis_ubuntu2604_sudo_rs_rsyslog_logfile: true
+
+# (cis_ubuntu2604_rule_5_2_6)
+cis_ubuntu2604_sudo_timestamp_timeout: 15 # 15 minutes or less as per your site policy
+
+# (cis_ubuntu2604_rule_5_3_*)
+cis_ubuntu2604_faillock_deny: 5
+cis_ubuntu2604_faillock_unlock_time: 900
+cis_ubuntu2604_faillock_difok: 2
+cis_ubuntu2604_faillock_minlen: 14
+cis_ubuntu2604_password_complexity:
+  - key: "minclass"
+    value: "3"
+  - key: "dcredit"
+    value: "-1"
+  - key: "ucredit"
+    value: "-1"
+  - key: "lcredit"
+    value: "-1"
+  - key: "ocredit"
+    value: "-1"
+cis_ubuntu2604_faillock_maxrepeat: 3
+cis_ubuntu2604_faillock_maxsequence: 3
+
+# in file (pwhistory.j2)
+cis_ubuntu2604_pwhistory_remember: remember=24
+cis_ubuntu2604_pwhistory_enforce_for_root: enforce_for_root
+cis_ubuntu2604_pwhistory_use_authtok: use_authtok
+
+# in file (unix.j2) and (cis_ubuntu2604_rule_5_3_3_4_3|cis_ubuntu2604_rule_5_4_1_4)
+cis_ubuntu2604_unix_encrypt_method: yescrypt # yescrypt | sha512
+# in file (unix.j2) and (cis_ubuntu2604_rule_5_3_3_4_4)
+cis_ubuntu2604_unix_use_authtok: "{{ cis_ubuntu2604_pwhistory_use_authtok }}"
+
+cis_ubuntu2604_password_pass_max_days: 365
+cis_ubuntu2604_password_pass_min_days: 1
+cis_ubuntu2604_password_pass_warn_age: 7
+cis_ubuntu2604_password_inactive: 45
+
+# journald log file rotation (cis_ubuntu2604_rule_6_1_1_1_5)
+cis_ubuntu2604_journald_system_max_use: 4G
+cis_ubuntu2604_journald_system_keep_free: 8G
+cis_ubuntu2604_journald_runtime_max_use: 256M
+cis_ubuntu2604_journald_runtime_keep_free: 512M
+cis_ubuntu2604_journald_max_file_sec: 1month
+
+# preferred method for capturing logs (cis_ubuntu2604_ext_journald_no_forward, cis_ubuntu2604_rule_6_1_1_1_3)
+cis_ubuntu2604_preferred_capturing_log_method: journald # journald | rsyslog
+
+# systemd-journal-upload remote upload (cis_ubuntu2604_ext_journal_remote_install-4)
+cis_ubuntu2604_set_journal_upload_url: null
+cis_ubuntu2604_set_journal_upload_server_key_file: /etc/ssl/private/journal-upload.pem
+cis_ubuntu2604_set_journal_upload_server_certificate_file: /etc/ssl/certs/journal-upload.pem
+cis_ubuntu2604_set_journal_upload_trusted_certificate_file: /etc/ssl/ca/trusted.pem
+
+# rsyslog remote log host (cis_ubuntu2604_rule_6_1_2_5)
+cis_ubuntu2604_set_rsyslog_remote_target: null
+cis_ubuntu2604_set_rsyslog_remote_port: 514
+cis_ubuntu2604_set_rsyslog_remote_protocol: tcp
+# 6.1.2.8-10 (L2): TLS (gtls) forwarding. Set port to 6514 when enabling.
+cis_ubuntu2604_set_rsyslog_remote_tls: false
+cis_ubuntu2604_set_rsyslog_remote_tls_authmode: x509/name # anon | x509/certvalid | x509/name
+cis_ubuntu2604_set_rsyslog_remote_ca_file: /etc/ssl/certs/ca-certificates.crt
+
+# audit backlog limit (cis_ubuntu2604_rule_6_2_1_4)
+cis_ubuntu2604_audit_backlog_limit: 8192
+# audit conf's (cis_ubuntu2604_rule_6_2_2_*)
+cis_ubuntu2604_audit_max_log_file: 8
+cis_ubuntu2604_audit_max_log_file_action: keep_logs
+cis_ubuntu2604_audit_disk_full_action: halt # halt | single
+cis_ubuntu2604_audit_disk_error_action: halt # halt | syslog | single
+cis_ubuntu2604_audit_space_left_action: email # email | exec | single | halt
+cis_ubuntu2604_audit_admin_space_left_action: single # single | halt
+# (cis_ubuntu2604_rule_6_2_4_1-4)
+cis_ubuntu2604_audit_log_path: /var/log/audit
+# auditd group (cis_ubuntu2604_rule_6_2_4_3)
+cis_ubuntu2604_audit_log_group: adm
+# in file (cis_6_2_3_3.rules.j2) and (cis_ubuntu2604_rule_5_2_3)
+cis_ubuntu2604_audit_sudo_log_file: /var/log/sudo.log
+# in file (cis_6_2_3_6.rules.j2|cis_6_2_3_7.rules.j2|cis_6_2_3_9.rules.j2|cis_6_2_3_10.rules.j2|cis_6_2_3_13.rules.j2)
+# in file (cis_6_2_3_15.rules.j2|cis_6_2_3_16.rules.j2|cis_6_2_3_17.rules.j2|cis_6_2_3_18.rules.j2|cis_6_2_3_19.rules.j2)
+cis_ubuntu2604_audit_uid_min: 1000
+
+# AIDE cron settings (cis_ubuntu2604_rule_6_3_2)
+cis_ubuntu2604_aide_conf_file: /etc/aide/aide.conf
+
+# ------------------------------------------------------------------------------
+
+# SPECIAL multi similar CIS rules set for 2.1
+cis_ubuntu2604_protected_services:
+  - CIS-CAT_Pro_Dashboard.service
+  - dbus.service
+  - cron.service
+  - mariadb
+  - mariadb.service
+  - mariadb-server
+  - rsync
+  - rsync.service
+  - mariadb
+  - mariadb.service
+  - mariadb-server
+  - chrony
+  - chrony.service
+  - dbus
+  - dbus.service
+  - ssh
+  - sshd
+  - ssh.service
+  - systemd-journald
+  - rsyslog
+  - systemd-timesyncd
+  - dbus
+  - networkd-dispatcher
+  - xrdp.service
+  - rpcbind
+  - rpcbind.service
+  - rpcbind.socket
+
+# Role-based service protection
+cis_ubuntu2604_role_protected_services:
+  web_profile:
+    - apache2
+    - apache2.service
+    - containerd.service
+    - docker
+    - docker.service
+    - nginx
+    - nginx.service
+    - rsync
+    - rsync.service
+    - rpcbind
+    - rpcbind.service
+    - rpcbind.socket
+    - mariadb
+    - mariadb.service
+    - mariadb-server
+    - rpcbind
+    - rpcbind.service
+    - rpcbind.socket
+    - postgresql
+    - postgresql.service
+  database_profile:
+    - mysql
+    - mysqld
+    - mysql.service
+    - mariadb
+    - mariadb.service
+    - postgresql
+    - postgresql.service
+  security_profile:
+    - vsftpd
+    - vsftpd.service
+    - proftpd
+    - proftpd.service
+    - tftpd-hpa.service
+    - snmpd
+    - snmpd.service
+    - rsyslog
+    - rsyslog.service
+
+cis_ubuntu2604_2_1_rule_set:
+  - title: SECTION2 | 2.1.1 | Ensure autofs services are not in use
+    service:
+      - autofs.service
+    apt:
+      - autofs
+    disable: "{{ cis_ubuntu2604_rule_2_1_1 and not cis_ubuntu2604_allow_autofs }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_1_remove and not cis_ubuntu2604_allow_autofs }}"
+  - title: SECTION2 | 2.1.2 | Ensure avahi daemon services are not in use
+    service:
+      - avahi-daemon.socket
+      - avahi-daemon.service
+    apt:
+      - avahi-daemon
+    disable: "{{ cis_ubuntu2604_rule_2_1_2 and not cis_ubuntu2604_allow_avahi }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_2_remove and not cis_ubuntu2604_allow_avahi }}"
+  - title: SECTION2 | 2.1.3 | Ensure dhcp server services are not in use
+    service:
+      - isc-dhcp-server.service
+      - isc-dhcp-server6.service
+    apt:
+      - isc-dhcp-server
+    disable: "{{ cis_ubuntu2604_rule_2_1_3 and not cis_ubuntu2604_allow_dhcp }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_3_remove and not cis_ubuntu2604_allow_dhcp }}"
+  - title: SECTION2 | 2.1.4 | Ensure dns server services are not in use
+    service:
+      - named.service
+      - bind9.service
+    apt:
+      - bind9
+    disable: "{{ cis_ubuntu2604_rule_2_1_4 and not cis_ubuntu2604_allow_dns }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_4_remove and not cis_ubuntu2604_allow_dns }}"
+  - title: SECTION2 | 2.1.5 | Ensure dnsmasq services are not in use
+    service:
+      - dnsmasq.service
+    apt:
+      - dnsmasq
+    disable: "{{ cis_ubuntu2604_rule_2_1_5 and not cis_ubuntu2604_allow_dnsmasq }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_5_remove and not cis_ubuntu2604_allow_dnsmasq }}"
+  - title: SECTION2 | 2.1.6 | Ensure ftp server services are not in use
+    service:
+      - vsftpd.service
+    apt:
+      - vsftpd
+    disable: "{{ cis_ubuntu2604_rule_2_1_6 and not cis_ubuntu2604_allow_vsftpd }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_6_remove and not cis_ubuntu2604_allow_vsftpd }}"
+  - title: SECTION2 | 2.1.7 | Ensure ldap server services are not in use
+    service:
+      - slapd.service
+    apt:
+      - slapd
+    disable: "{{ cis_ubuntu2604_rule_2_1_7 and not cis_ubuntu2604_allow_ldap }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_7_remove and not cis_ubuntu2604_allow_ldap }}"
+  - title: SECTION2 | 2.1.8 | Ensure message access server services are not in use
+    service:
+      - dovecot.socket
+      - dovecot.service
+    apt:
+      - dovecot-imapd
+      - dovecot-pop3d
+    disable: "{{ cis_ubuntu2604_rule_2_1_8 and not cis_ubuntu2604_allow_dovecot }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_8_remove and not cis_ubuntu2604_allow_dovecot }}"
+  - title: SECTION2 | 2.1.9 | Ensure network file system services are not in use
+    service:
+      - nfs-server.service
+    apt:
+      - nfs-kernel-server
+    disable: "{{ cis_ubuntu2604_rule_2_1_9 and not cis_ubuntu2604_allow_nfs }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_9_remove and not cis_ubuntu2604_allow_nfs }}"
+  - title: SECTION2 | 2.1.10 | Ensure nis server services are not in use
+    service:
+      - ypserv.service
+    apt:
+      - nis
+      - ypserv
+    disable: "{{ cis_ubuntu2604_rule_2_1_10 and not cis_ubuntu2604_allow_nis }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_10_remove and not cis_ubuntu2604_allow_nis }}"
+  - title: SECTION2 | 2.1.11 | Ensure print server services are not in use
+    service:
+      - cups.socket
+      - cups.service
+    apt:
+      - cups
+    disable: "{{ cis_ubuntu2604_rule_2_1_11 and not cis_ubuntu2604_allow_cups }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_11_remove and not cis_ubuntu2604_allow_cups }}"
+  - title: SECTION2 | 2.1.12 | Ensure rpcbind services are not in use
+    service:
+      - rpcbind.socket
+      - rpcbind.service
+    apt:
+      - rpcbind
+    disable: "{{ cis_ubuntu2604_rule_2_1_12 and not cis_ubuntu2604_allow_rpcbind }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_12_remove and not cis_ubuntu2604_allow_rpcbind }}"
+  - title: SECTION2 | 2.1.13 | Ensure rsync services are not in use
+    service:
+      - rsync.service
+    apt:
+      - rsync
+    disable: "{{ cis_ubuntu2604_rule_2_1_13 and not cis_ubuntu2604_allow_rsync }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_13_remove and not cis_ubuntu2604_allow_rsync }}"
+  - title: SECTION2 | 2.1.14 | Ensure samba file server services are not in use
+    service:
+      - smbd.service
+    apt:
+      - samba
+    disable: "{{ cis_ubuntu2604_rule_2_1_14 and not cis_ubuntu2604_allow_samba }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_14_remove and not cis_ubuntu2604_allow_samba }}"
+  - title: SECTION2 | 2.1.15 | Ensure snmp services are not in use
+    service:
+      - snmpd.service
+    apt:
+      - snmpd
+    disable: "{{ cis_ubuntu2604_rule_2_1_15 and not cis_ubuntu2604_allow_snmp }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_15_remove and not cis_ubuntu2604_allow_snmp }}"
+  - title: SECTION2 | 2.1.16 | Ensure telnet server services are not in use
+    service:
+      - inetutils-inetd.service
+    apt:
+      - telnetd
+      - inetutils-telnetd
+    disable: "{{ cis_ubuntu2604_rule_2_1_16 and not cis_ubuntu2604_allow_telnet_server }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_16_remove and not cis_ubuntu2604_allow_telnet_server }}"
+  - title: SECTION2 | 2.1.17 | Ensure tftp server services are not in use
+    service:
+      - tftpd-hpa.service
+    apt:
+      - tftpd-hpa
+    disable: "{{ cis_ubuntu2604_rule_2_1_17 and not cis_ubuntu2604_allow_tftp }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_17_remove and not cis_ubuntu2604_allow_tftp }}"
+  - title: SECTION2 | 2.1.18 | Ensure web proxy server services are not in use
+    service:
+      - squid.service
+    apt:
+      - squid
+    disable: "{{ cis_ubuntu2604_rule_2_1_18 and not cis_ubuntu2604_allow_squid }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_18_remove and not cis_ubuntu2604_allow_squid }}"
+  - title: SECTION2 | 2.1.19 | Ensure web server services are not in use
+    service:
+      - apache2.socket
+      - apache2.service
+      - httpd.service
+      - nginx.service
+    apt:
+      - apache2
+      - nginx
+    disable: "{{ cis_ubuntu2604_rule_2_1_19 and not cis_ubuntu2604_allow_web_server }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_19_remove and not cis_ubuntu2604_allow_web_server }}"
+  - title: SECTION2 | 2.1.20 | Ensure xinetd services are not in use
+    service:
+      - xinetd.service
+    apt:
+      - xinetd
+    disable: "{{ cis_ubuntu2604_rule_2_1_20 and not cis_ubuntu2604_allow_xinetd }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_20_remove and not cis_ubuntu2604_allow_xinetd }}"
+  - title: SECTION2 | 2.1.21 | Ensure X window server services are not in use
+    apt:
+      - xserver-common
+      - xserver-xorg
+      - xorg
+    disable: "{{ cis_ubuntu2604_rule_2_1_21 and not cis_ubuntu2604_allow_gdm_gui }}"
+    remove: "{{ cis_ubuntu2604_rule_2_1_21_remove and not cis_ubuntu2604_allow_gdm_gui }}"
+
+# SPECIAL multi similar CIS rules set for 2.2
+cis_ubuntu2604_2_2_rule_set:
+  - title: 2.2.1 | Ensure nis Client is not installed
+    apt:
+      - nis
+      - yp-tools
+    remove: "{{ cis_ubuntu2604_rule_2_2_1 }}"
+  - title: 2.2.2 | Ensure rsh client is not installed
+    apt:
+      - rsh-client
+    remove: "{{ cis_ubuntu2604_rule_2_2_2 }}"
+  - title: 2.2.3 | Ensure talk client is not installed
+    apt:
+      - talk
+    remove: "{{ cis_ubuntu2604_rule_2_2_3 }}"
+  - title: 2.2.4 | Ensure telnet client is not installed
+    apt:
+      - telnet
+      - inetutils-telnet
+    remove: "{{ cis_ubuntu2604_rule_2_2_4 }}"
+  - title: 2.2.5 | Ensure ldap client is not installed
+    apt:
+      - ldap-utils
+    remove: "{{ cis_ubuntu2604_rule_2_2_5 }}"
+  - title: 2.2.6 | Ensure ftp client is not installed
+    apt:
+      - ftp
+      - tnftp
+    remove: "{{ cis_ubuntu2604_rule_2_2_6 }}"
+
+# SPECIAL multi similar CIS rules set for 6.1.4.1
+cis_ubuntu2604_logfiles_access:
+  - files: 'lastlog|lastlog\.*|wtmp|wtmp\.*|wtmp-*|btmp|btmp\.*|btmp-*|README'
+    mode: "0664"
+    owner: root
+    group: utmp # root|utmp
+  - files: 'secure|auth\.log|syslog|messages'
+    mode: "0640"
+    owner: syslog # root|syslog
+    group: "{{ cis_ubuntu2604_audit_log_group }}" # root|adm
+  - files: "SSSD|sssd"
+    mode: "0660"
+    owner: sssd # root|sssd
+    group: sssd # root|sssd
+  - files: "gdm|gdm3"
+    mode: "0660"
+    owner: root
+    group: gdm # root|gdm|gdm3
+  - files: '*\.journal|*\.journal~'
+    mode: "0640"
+    owner: root
+    group: systemd-journal # root|systemd-journal
+
+# ------------------------------------------------------------------------------
+
+# SECTION based handled file access variable
+# ---------------------------------------
+# SECTION1
+cis_ubuntu2604_section1_owner_default: root
+cis_ubuntu2604_section1_group_default: root
+cis_ubuntu2604_section1_mode_default: "0644"
+cis_ubuntu2604_section1_mode_boot_grub: "0400"
+cis_ubuntu2604_section1_mode_etc_issue_motd: "0444"
+cis_ubuntu2604_section1_mode_etc_grub_d: "0755"
+cis_ubuntu2604_section1_mode_etc_dconf_folder: "0755"
+
+# SECTION2
+cis_ubuntu2604_section2_owner_default: root
+cis_ubuntu2604_section2_group_default: root
+cis_ubuntu2604_section2_group_etc_at_allow: daemon
+cis_ubuntu2604_section2_mode_default: "0644"
+cis_ubuntu2604_section2_mode_cron: "0600"
+cis_ubuntu2604_section2_mode_cron_folder: "0700"
+
+# SECTION3
+cis_ubuntu2604_section3_owner_default: root
+cis_ubuntu2604_section3_group_default: root
+cis_ubuntu2604_section3_mode_default: "0644"
+
+# SECTION5
+cis_ubuntu2604_section5_owner_ssh: root
+cis_ubuntu2604_section5_group_ssh: root
+cis_ubuntu2604_section5_mode_ssh: "0600"
+cis_ubuntu2604_section5_mode_ssh_pub: "0644"
+cis_ubuntu2604_section5_owner_sudo: root
+cis_ubuntu2604_section5_group_sudo: root
+cis_ubuntu2604_section5_mode_sudo: "0400"
+cis_ubuntu2604_section5_owner_pam: root
+cis_ubuntu2604_section5_group_pam: root
+cis_ubuntu2604_section5_mode_pam: "0644"
+
+# ------------------------------------------------------------------------------
+# 26.04 specifics
+# ------------------------------------------------------------------------------
+cis_ubuntu2604_supported_versions:
+  - "26.04"
+# rebuild initrd (dracut by default on 26.04) when modprobe.d deny-lists change
+cis_ubuntu2604_regenerate_initramfs: true
+# 1.2.1.10/1.2.1.11: hosts to rewrite from http:// to https:// in APT sources (only if your mirror serves https)
+cis_ubuntu2604_apt_https_hosts: []
+#  - archive.ubuntu.com
+#  - security.ubuntu.com
+# 1.5.3: 1 (restricted), 2 (admin-only) or 3 (no attach)
+cis_ubuntu2604_ptrace_scope: 1
+# 1.5.8: 1 or 2
+cis_ubuntu2604_kptr_restrict: 2
+# 1.6.4: /etc/update-motd.d scripts that print OS/kernel/platform details (exec bit removed if present)
+cis_ubuntu2604_update_motd_disable:
+  - 00-header
+  - 10-help-text
+  - 10-uname
+  - 50-landscape-sysinfo
+  - 50-motd-news
+  - 91-release-upgrade
+  - 95-hwe-eol
+# 3.2.7: site-unneeded network protocol modules (e.g. esp4, esp6, rxrpc - review IPsec/AFS needs first)
+cis_ubuntu2604_net_modules_deny: []

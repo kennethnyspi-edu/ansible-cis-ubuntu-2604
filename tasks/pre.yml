@@ -1,0 +1,223 @@
+---
+# tasks file for ansible-cis-ubuntu-2604
+
+# ------------------------------------------------------------------------------
+
+- name: "PRE | run apt cache update"
+  ansible.builtin.apt:
+    update_cache: true
+    force_apt_get: true
+  changed_when: false
+  tags:
+    - pre
+
+# ------------------------------------------------------------------------------
+
+- name: "PRE | GRUB | check if default-grub exists"
+  ansible.builtin.stat:
+    path: "{{ cis_ubuntu2604_default_grub_file }}"
+  register: cis_ubuntu2604_default_grub_file_check
+  tags:
+    - pre
+
+- name: "PRE | GRUB | create default-grub from template"
+  ansible.builtin.template:
+    src: grub.j2
+    dest: "{{ cis_ubuntu2604_default_grub_file }}"
+    owner: root
+    group: root
+    mode: "0644"
+  when:
+    - not cis_ubuntu2604_default_grub_file_check.stat.exists
+  tags:
+    - pre
+
+# ------------------------------------------------------------------------------
+
+- name: "PRE | Ensure ansible tmp directory is owned by connection user"
+  ansible.builtin.file:
+    path: /var/tmp/.ansible
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0700'
+  become: true
+  tags: always
+
+- name: "PRE | Ensure ansible tmp subdirectory is writable"
+  ansible.builtin.file:
+    path: /var/tmp/.ansible/tmp
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0700'
+  become: true
+  tags: always
+
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# 26.04: sudo-rs is the default sudo provider (sudo.ws is the C sudo, via update-alternatives)
+
+- name: "PRE | 5.2 | select sudo provider via update-alternatives"
+  community.general.alternatives:
+    name: sudo
+    path: "{{ '/usr/bin/sudo.ws' if cis_ubuntu2604_sudo_provider == 'sudo.ws' else '/usr/lib/cargo/bin/sudo' }}"
+  when:
+    - cis_ubuntu2604_manage_sudo_provider | bool
+    - ansible_virtualization_type != "docker"
+  tags:
+    - pre
+
+- name: "PRE | 5.2 | detect active sudo implementation"
+  ansible.builtin.command: sudo --version
+  register: cis_ubuntu2604_sudo_version
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  tags:
+    - pre
+
+- name: "PRE | 5.2 | set sudo implementation fact"
+  ansible.builtin.set_fact:
+    cis_ubuntu2604_sudo_is_rs: "{{ (cis_ubuntu2604_sudo_version.stdout | default('')) is search('sudo-rs') }}"
+  tags:
+    - pre
+
+# ------------------------------------------------------------------------------
+# 26.04: dracut replaces initramfs-tools as the default initrd generator.
+# /etc/modprobe.d is copied into the initrd, so CIS module deny-lists need an initrd rebuild.
+
+- name: "PRE | 1.1.1, 3.2 | detect initramfs generator"
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    dpkg-query -W -f='${Status}' dracut 2>/dev/null | grep -q 'install ok installed' && echo dracut || echo initramfs-tools
+  args:
+    executable: "{{ cis_ubuntu2604_shell_executable }}"
+  register: cis_ubuntu2604_initrd_generator
+  changed_when: false
+  check_mode: false
+  tags:
+    - pre
+
+- name: "PRE | 1.4.2 | check the grub.cfg configuration"
+  ansible.builtin.stat:
+    path: /boot/grub/grub.cfg
+  register: cis_grub_cfg
+  tags:
+    - pre
+
+- name: "PRE | 1.4.2 | check the grub.conf configuration"
+  ansible.builtin.stat:
+    path: /boot/grub/grub.conf
+  register: cis_grub_conf
+  tags:
+    - pre
+
+- name: "PRE | 1.4.2 | check the menu.lst configuration"
+  ansible.builtin.stat:
+    path: /boot/grub/menu.lst
+  register: cis_menu_lst
+  tags:
+    - pre
+
+# ------------------------------------------------------------------------------
+# systemctl show <SERVICE> | grep -E 'LoadState|ActiveState' | cut -d = -f 2 | tr -d '\n'
+# check, for disable and mask, with: <REGISTER>.stdout in ('loadedactive','loadedinactive')
+# check, for only disable, with    : <REGISTER>.stdout in ('loadedactive')
+# - loadedactive
+# - loadedinactive
+# - maskedinactive
+# - not-foundinactive
+
+- name: "PRE | 1.5.3 | check for 'systemd-coredump' socket"
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    systemctl show systemd-coredump.socket | grep -E 'LoadState|ActiveState' | cut -d = -f 2 | tr -d '\n'
+  args:
+    executable: "{{ cis_ubuntu2604_shell_executable }}"
+  register: service_status_coredump
+  changed_when: false
+  check_mode: false
+  tags:
+    - pre
+
+- name: "PRE | 1.5.5 | check for 'apport' service"
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    systemctl show apport | grep -E 'LoadState|ActiveState' | cut -d = -f 2 | tr -d '\n'
+  args:
+    executable: "{{ cis_ubuntu2604_shell_executable }}"
+  register: service_status_apport
+  changed_when: false
+  check_mode: false
+  tags:
+    - pre
+
+- name: "PRE | 1.7 | check for 'gdm3' service"
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    systemctl show gdm3 | grep -E 'LoadState|ActiveState' | cut -d = -f 2 | tr -d '\n'
+  args:
+    executable: "{{ cis_ubuntu2604_shell_executable }}"
+  register: service_status_gdm3
+  changed_when: false
+  check_mode: false
+  tags:
+    - pre
+
+- name: "PRE | 2.3.1.1 | check for 'systemd-timesyncd' service"
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    systemctl show systemd-timesyncd | grep -E 'LoadState|ActiveState' | cut -d = -f 2 | tr -d '\n'
+  args:
+    executable: "{{ cis_ubuntu2604_shell_executable }}"
+  register: service_status_systemd_timesyncd
+  changed_when: false
+  check_mode: false
+  tags:
+    - pre
+
+- name: "PRE | 2.4.1 | check for 'cron' service"
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    systemctl show cron | grep -E 'LoadState|ActiveState' | cut -d = -f 2 | tr -d '\n'
+  args:
+    executable: "{{ cis_ubuntu2604_shell_executable }}"
+  register: service_status_cron
+  changed_when: false
+  check_mode: false
+  tags:
+    - pre
+
+- name: "PRE | 5.1 | check for 'ssh' service"
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    systemctl show ssh | grep -E 'LoadState|ActiveState' | cut -d = -f 2 | tr -d '\n'
+  args:
+    executable: "{{ cis_ubuntu2604_shell_executable }}"
+  register: service_status_ssh
+  changed_when: false
+  check_mode: false
+  tags:
+    - pre
+
+# ------------------------------------------------------------------------------
+
+- name: "PRE | 2.1.21, 6.3.1 | check if 'postfix' package is installed"
+  ansible.builtin.command: dpkg -V postfix
+  register: package_installed_postfix
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  tags:
+    - pre
+
+- name: "PRE | 1.5.4 | check if 'prelink' package is installed"
+  ansible.builtin.command: dpkg -V prelink
+  register: package_installed_prelink
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  tags:
+    - pre
