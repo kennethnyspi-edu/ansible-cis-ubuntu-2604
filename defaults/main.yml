@@ -1123,3 +1123,10 @@ cis_ubuntu2604_update_motd_disable:
   - 95-hwe-eol
 # 3.2.7: site-unneeded network protocol modules (e.g. esp4, esp6, rxrpc - review IPsec/AFS needs first)
 cis_ubuntu2604_net_modules_deny: []
+# 6.2.4.8-10 / 6.3.3: audit tools per CIS 26.04 v1.0.0 (autrace was removed from the audit package)
+cis_ubuntu2604_audit_tools:
+  - /sbin/auditctl
+  - /sbin/aureport
+  - /sbin/ausearch
+  - /sbin/auditd
+  - /sbin/augenrules

@@ -1445,14 +1445,8 @@
 - name: "SECTION6 | 6.2.4.8 | Ensure audit tools mode is configured"
   ansible.builtin.file:
     path: "{{ item }}"
-    mode: "0755"
-  with_items:
-    - /sbin/auditctl
-    - /sbin/aureport
-    - /sbin/ausearch
-    - /sbin/autrace
-    - /sbin/auditd
-    - /sbin/augenrules
+    mode: "go-w"
+  loop: "{{ cis_ubuntu2604_audit_tools }}"
   when:
     - cis_ubuntu2604_rule_6_2_4_8
   tags:
@@ -1464,13 +1458,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     owner: root
-  with_items:
-    - /sbin/auditctl
-    - /sbin/aureport
-    - /sbin/ausearch
-    - /sbin/autrace
-    - /sbin/auditd
-    - /sbin/augenrules
+  loop: "{{ cis_ubuntu2604_audit_tools }}"
   when:
     - cis_ubuntu2604_rule_6_2_4_9
   tags:
@@ -1482,13 +1470,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     group: root
-  with_items:
-    - /sbin/auditctl
-    - /sbin/aureport
-    - /sbin/ausearch
-    - /sbin/autrace
-    - /sbin/auditd
-    - /sbin/augenrules
+  loop: "{{ cis_ubuntu2604_audit_tools }}"
   when:
     - cis_ubuntu2604_rule_6_2_4_10
   tags:
@@ -1581,10 +1563,22 @@
       line: "/usr/sbin/ausearch p+i+n+u+g+s+b+acl+xattrs+sha512"
     - reg: "{{ cis_ubuntu2604_regex_base_search }}.*?sbin.*?\/\/aureport"
       line: "/usr/sbin/aureport p+i+n+u+g+s+b+acl+xattrs+sha512"
-    - reg: "{{ cis_ubuntu2604_regex_base_search }}.*?sbin.*?\/\/autrace"
-      line: "/usr/sbin/autrace p+i+n+u+g+s+b+acl+xattrs+sha512"
     - reg: "{{ cis_ubuntu2604_regex_base_search }}.*?sbin.*?\/\/augenrules"
       line: "/usr/sbin/augenrules p+i+n+u+g+s+b+acl+xattrs+sha512"
+  when:
+    - cis_ubuntu2604_install_aide | bool
+    - cis_ubuntu2604_config_aide | bool
+    - cis_ubuntu2604_rule_6_3_3
+  tags:
+    - rule_6_3
+    - server_l2
+    - workstation_l2
+
+- name: "SECTION6 | 6.3.3 | Ensure cryptographic mechanisms are used to protect the integrity of audit tools | drop autrace (removed in 26.04)"
+  ansible.builtin.lineinfile:
+    path: /etc/aide/aide.conf
+    regexp: '^\s*\S*/autrace\s'
+    state: absent
   when:
     - cis_ubuntu2604_install_aide | bool
     - cis_ubuntu2604_config_aide | bool
