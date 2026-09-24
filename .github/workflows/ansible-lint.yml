@@ -16,9 +16,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # https://github.com/actions/checkout
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      # https://github.com/ansible/ansible-lint
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install ansible-lint
+        run: python3 -m pip install ansible-lint
+
+      - name: Install collections (bypass Galaxy response cache, retry once)
+        run: |
+          ansible-galaxy collection install -r requirements.yml --no-cache \
+            || { sleep 20; ansible-galaxy collection install -r requirements.yml --no-cache; }
+
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@main
+        run: ansible-lint --offline

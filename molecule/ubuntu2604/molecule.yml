@@ -3,6 +3,7 @@ dependency:
   name: galaxy
   options:
     requirements-file: ${MOLECULE_PROJECT_DIRECTORY}/requirements.yml
+    no-cache: true
 driver:
   name: docker
 platforms:
