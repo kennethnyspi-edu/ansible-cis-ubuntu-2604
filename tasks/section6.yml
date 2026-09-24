@@ -524,11 +524,11 @@
       register: cis_ubuntu2604_rule_6_1_3_1_result
       failed_when: false
       changed_when: false
-      
+
     - name: "SECTION6 | 6.1.3.1 | Log failures if any"
       ansible.builtin.debug:
         msg: "Failed to set access on {{ item.item.path }} → {{ item.msg }}"
-      loop: "{{ cis_ubuntu2604_rule_6_1_3_1_result | selectattr('failed','defined') | selectattr('failed') | list }}"
+      loop: "{{ cis_ubuntu2604_rule_6_1_3_1_result | selectattr('failed', 'defined') | selectattr('failed') | list }}"
       when: cis_ubuntu2604_rule_6_1_3_1_result is defined
 
 # ------------------------------------------------------------------------------

@@ -192,9 +192,9 @@
         - item is mapping
         - >
           (item.msg is defined and 'Read-only file system' in item.msg)
-          or (item.stderr is defined and 'Read-only file system' in item.stderr) 
+          or (item.stderr is defined and 'Read-only file system' in item.stderr)
       loop_control:
-        label: "{{ item.item | default('unknown')}}"
+        label: "{{ item.item | default('unknown') }}"
 
 - name: "SECTION7 | 7.1.12 | Ensure no files or directories without an owner and a group exist"
   when:
@@ -548,7 +548,7 @@
     - name: "SECTION7 | 7.2.9 | Log failures"
       ansible.builtin.debug:
         msg: "Failed to set access on {{ item.item }} → {{ item.msg }}"
-      loop: "{{ cis_ubuntu2604_rule_7_2_9_result | selectattr('failed','defined') | selectattr('failed') | list }}"
+      loop: "{{ cis_ubuntu2604_rule_7_2_9_result | selectattr('failed', 'defined') | selectattr('failed') | list }}"
       when: cis_ubuntu2604_rule_7_2_9_result is defined
 
 - name: "SECTION7 | 7.2.10 | Ensure local interactive user dot files access is configured"

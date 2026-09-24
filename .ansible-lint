@@ -6,5 +6,6 @@ exclude_paths:
 warn_list:
   - name[template] # Rule for checking task and play names.
 skip_list:
+  - complexity[tasks] # task files mirror CIS benchmark sections
   - yaml[comments-indentation]
   - yaml[comments]

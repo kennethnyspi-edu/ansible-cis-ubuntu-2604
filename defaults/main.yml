@@ -1,6 +1,5 @@
 ---
 # defaults file for ansible-cis-ubuntu-2604
-# Added by Kenneth Masis 09/21/2026
 
 # ------------------------------------------------------------------------------
 
@@ -676,7 +675,7 @@ cis_ubuntu2604_sudo_nopasswd_exceptions:
   - angienypi
   - waseemnypi
   - ansible-user
-  
+
 # ------------------------------------------------------------------------------
 # 26.04: sudo provider. 'sudo-rs' is the distro default; 'sudo.ws' is the original C sudo.
 # sudo-rs has no 'logfile' option (syslog only) and no I/O logging, see rule 5.2.3 handling.

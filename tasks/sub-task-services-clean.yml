@@ -6,7 +6,7 @@
       {{
         (cis_ubuntu2604_protected_services | default([]))
         + (
-          cis_ubuntu2604_role_protected_services[firewall_role | default('')] 
+          cis_ubuntu2604_role_protected_services[firewall_role | default('')]
           | default([])
         )
       | unique

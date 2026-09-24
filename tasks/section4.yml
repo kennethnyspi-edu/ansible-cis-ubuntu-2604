@@ -53,7 +53,6 @@
         interface: "{{ ansible_default_ipv4['interface'] }}"
         log: true
         comment: "allow incoming connection on standard ssh port for interface {{ ansible_default_ipv4['interface'] }}"
-      ignore_errors: false
     - name: "SECTION4 | 4.1.2 | Ensure ufw service is enabled | systemd"
       ansible.builtin.systemd_service:
         name: ufw.service
@@ -72,7 +71,9 @@
       async: 60
       poll: 5
     - name: "SECTION4 | 4.1.2 | Ensure ufw service is enabled | Verify ufw is active"
-      ansible.builtin.shell: 'ufw status | grep -q "Status: active"'
+      ansible.builtin.shell: 'set -o pipefail && ufw status | grep -q "Status: active"'
+      args:
+        executable: /bin/bash
       register: ufw_status_check
       changed_when: false
       failed_when: ufw_status_check.rc != 0
@@ -115,7 +116,10 @@
 
     - name: "SECTION4 | 4.1.2b | Detect open listening ports"
       ansible.builtin.shell: |
+        set -o pipefail
         ss -tuln | awk 'NR>1 {print $5}' | sed 's/.*://g' | sort -u
+      args:
+        executable: /bin/bash
       register: detected_ports
       changed_when: false
       failed_when: false
@@ -180,7 +184,7 @@
       loop: "{{ combined_ports | unique }}"
       loop_control:
         label: "{{ item.comment }} ({{ item.port }}/{{ item.proto }})"
-      ignore_errors: true
+      ignore_errors: true # noqa: ignore-errors - detected ports can include values ufw rejects; keep going
 
 - name: "SECTION4 | EXT ext_ufw_loopback | Ensure ufw loopback traffic is configured"
   when:
@@ -263,7 +267,7 @@
     - workstation_l1
 
 - name: "SECTION4 | 4.1.4 | Ensure ufw outgoing default is configured"
-  community.general.ufw:
+  community.general.ufw: # noqa: args[module] policy is templated (allow|deny|reject)
     policy: "{{ cis_ubuntu2604_firewall_ufw_outgoing_policy | default('deny') }}"
     direction: outgoing
     log: true

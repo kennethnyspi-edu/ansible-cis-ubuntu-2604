@@ -848,7 +848,10 @@
   block:
     - name: "SECTION1 | 1.2.1.10 | report http:// repositories"
       ansible.builtin.shell: >
+        set -o pipefail;
         grep -HnsP '^\s*(deb(-src)?\s+(\[[^]]*\]\s+)?|URIs:.*)http://' /etc/apt/sources.list || true
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
       register: _cis_http_repos
       changed_when: false
       check_mode: false
@@ -863,6 +866,7 @@
         done
       args:
         executable: "{{ cis_ubuntu2604_shell_executable }}"
+      changed_when: true
       when:
         - cis_ubuntu2604_apt_https_hosts | length > 0
         - _cis_http_repos.stdout | length > 0
@@ -881,7 +885,10 @@
   block:
     - name: "SECTION1 | 1.2.1.11 | report http:// repositories"
       ansible.builtin.shell: >
+        set -o pipefail;
         grep -HnsP '^\s*(deb(-src)?\s+(\[[^]]*\]\s+)?|URIs:.*)http://' /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources || true
+      args:
+        executable: "{{ cis_ubuntu2604_shell_executable }}"
       register: _cis_http_repos
       changed_when: false
       check_mode: false
@@ -896,6 +903,7 @@
         done
       args:
         executable: "{{ cis_ubuntu2604_shell_executable }}"
+      changed_when: true
       when:
         - cis_ubuntu2604_apt_https_hosts | length > 0
         - _cis_http_repos.stdout | length > 0

@@ -15,8 +15,8 @@
     cis_ubuntu2604_section6: true
     cis_ubuntu2604_section7: true
     # -------------------------
-    cis_ubuntu2604_rule_1_3_1_3: false # AppArmor complain mode
-    cis_ubuntu2604_rule_1_3_1_4: false # AppArmor enforce mode
+    cis_ubuntu2604_ext_apparmor_complain: false # AppArmor complain mode (extension)
+    cis_ubuntu2604_rule_1_3_1_3: false # AppArmor enforce mode
     # -------------------------
     cis_ubuntu2604_set_boot_pass: false # bootloader password (disabled)
     cis_ubuntu2604_disable_boot_pass: true # bootloader password (disabled with cis_ubuntu2604_set_boot_pass)
@@ -26,7 +26,7 @@
     # -------------------------
     cis_ubuntu2604_allow_gdm_gui: false
     cis_ubuntu2604_allow_autofs: false # Disable auto mount, set to true to allow it and not disable
-    cis_ubuntu2604_rule_1_1_1_9: true # Disable USB Storage, set to false to not disable
+    cis_ubuntu2604_rule_1_1_1_10: true # usb-storage (26.04: 1.1.1.10), set to false to not disable
     cis_ubuntu2604_time_synchronization_service: chrony # chrony | systemd-timesyncd
     cis_ubuntu2604_time_synchronization_time_server:
       - uri: time.cloudflare.com

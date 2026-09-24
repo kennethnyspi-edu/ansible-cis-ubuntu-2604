@@ -1,12 +1,17 @@
 ---
 dependency:
   name: galaxy
+  options:
+    requirements-file: ${MOLECULE_PROJECT_DIRECTORY}/requirements.yml
 driver:
   name: docker
 platforms:
   - name: ubuntu-26.04
-    image: mvladislav/docker-ubuntu-systemd-sudo-ansible:26.04
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    # built from Dockerfile.j2 (official ubuntu:26.04 + systemd + python3)
+    image: ubuntu:26.04
+    dockerfile: Dockerfile.j2
+    pre_build_image: false
+    command: /lib/systemd/systemd
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     tmpfs:
@@ -15,26 +20,22 @@ platforms:
       - /tmp
     privileged: true
     cgroupns_mode: host
-    pre_build_image: true
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
-    enabled: true
   config_options:
     defaults:
       host_key_checking: false
-      stdout_callback: yaml
+      stdout_callback: ansible.builtin.default
+      callback_result_format: yaml
       timeout: 10
       display_skipped_hosts: true
       show_per_host_start: true
-      callbacks_enabled: community.general.yaml,profile_tasks,timer
+      callbacks_enabled: ansible.posix.profile_tasks,ansible.posix.timer
       bin_ansible_callbacks: true
       fact_caching: jsonfile
       fact_caching_connection: ./cache
       poll_interval: 3
       forks: 100
-      conditional_bare_variables: false
     connection:
       pipelining: true
     ssh_connection:
