@@ -572,7 +572,9 @@ cis_ubuntu2604_time_synchronization_time_server:
 cis_ubuntu2604_chrony_use_distro_sources: false
 cis_ubuntu2604_chrony_use_dhcp_sources: false
 # general path for sysctl conf file
-cis_ubuntu2604_sysctl_file_path: /etc/sysctl.conf
+# 26.04: systemd-sysctl does not read /etc/sysctl.conf (no 99-sysctl.conf link), and the CIS audit
+# only accepts entries from files systemd-sysctl loads. The benchmark uses /etc/sysctl.d/60-*.conf.
+cis_ubuntu2604_sysctl_file_path: /etc/sysctl.d/60-cis_sysctl.conf
 # cron allow users (cis_ubuntu2604_rule_2_4_1_9)
 cis_ubuntu2604_cron_allow_users:
   - root
@@ -1034,6 +1036,9 @@ cis_ubuntu2604_2_2_rule_set:
     apt:
       - ftp
       - tnftp
+      - atftp
+      - inetutils-ftp
+      - ftp-ssl
     remove: "{{ cis_ubuntu2604_rule_2_2_6 }}"
 
 # SPECIAL multi similar CIS rules set for 6.1.4.1

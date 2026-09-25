@@ -1947,3 +1947,9 @@
         owner: root
         group: root
         mode: "0644"
+    - name: "SECTION5 | 5.4.3.3 | Ensure default user umask is configured | UMASK in login.defs"
+      ansible.builtin.lineinfile:
+        dest: /etc/login.defs
+        regexp: '^\s*UMASK\s+'
+        line: "UMASK 027"
+        state: present

@@ -1294,6 +1294,7 @@
       ansible.builtin.systemd_service:
         name: apport
         daemon_reload: true
+        state: stopped
         enabled: false
         masked: true
     # - name: "SECTION1 | 1.5.7 | Ensure Automatic Error Reporting is not enabled | uninstall"
